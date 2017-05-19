@@ -1,21 +1,19 @@
+#include "orphelins.h"
 
-
-void Mise_A_Jour_Tirette()
+void CheckTirette()
 {
-    //Serial.println("Waiting Tirette");
-  if(digitalRead(GPIO_TIRRETTE)==LOW)
+  if(digitalRead(GpioTirette)==LOW)
   {
-    //Serial.println("GOOOO");
-    if(digitalRead(GPIO_COULEUR_JAUNE)==LOW)
+    TempsDebut = millis();
+    Tirette = false;
+    Serial.print("Début du match !");
+    if(digitalRead(GpioJaune)==LOW)
     {
-      //Couleur Jaune
-          //Serial.println("yellow");
+      Bleu = false;
     }
-    else if(digitalRead(GPIO_COULEUR_BLEU)==LOW)
+    else if(digitalRead(GpioBleu)==LOW)
     {
-      //Serial.println("Blue");
-      //Couleur Bleu
+      Bleu = true;
     }
-    Robot_Principal=En_Route;
   }
 }

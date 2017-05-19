@@ -3,8 +3,6 @@
 
 void InitActionneurs()
 {
-  Servo Lasso;
-  Servo FunnyAction;
   Lasso.attach(LassoPin);
   FunnyAction.attach(FunnyActionPin);
   Lasso.write(0);

@@ -11,4 +11,8 @@ void LassoBas();
 void JoueFunnyAction();
 
 
+Servo Lasso;
+Servo FunnyAction;
+
+
 #endif // ACTI_H_INCLUDED

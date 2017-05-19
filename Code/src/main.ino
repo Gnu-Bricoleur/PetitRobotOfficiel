@@ -4,35 +4,46 @@
 #include "actionneur.h"
 #include "assert.h"
 #include "machineetat.h"
-
+#include "orphelins.h"
 
 
 void setup()
 {
+  AsssertIni();
   InitMoteur();
   InitActionneurs();
   InitMachineEtat();
+  Tirette = true;
+  Serial.begin(9600);
+  Serial.println("Fin des initailisations !");
 }
 void loop()
 {
+  while(Tirette)
+  {
+    CheckTirette();
+    Serial.println("Tirette enclenchée, en attente du début du match !");
+  }
+
+
   //Check obstacle
 
   //Check temps ecoule
-  if (millis() > 80000)
+  if (millis() - TempsDebut > 80000)
   {
     JoueFunnyAction();
-    While(true)
+    while(true)
     {
       // Fin du match, boucle infinie
     }
   }
-  
+
   //Machine d'état
   MachineEtat();
 
   //update assert
 
   //Pour tests
-
-
+  //MoteurDroitTourne(true, 100);
+  //MoteurGaucheTourne(true, 100);
 }

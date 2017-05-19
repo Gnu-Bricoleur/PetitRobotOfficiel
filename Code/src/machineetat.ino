@@ -3,8 +3,10 @@
 void InitMachineEtat()
 {
   EtatCourant = 0;
-  EtatSuivant = 0;
   EtatComplete = false;
+
+  Actions[0] = 'A';
+  Param[0] = 100;
 }
 
 
@@ -15,12 +17,12 @@ void MachineEtat()
   switch(Action)
   {
     case 'A':
-      RouleDroit();
       Consigne = Param[EtatCourant];
+      RouleDroit();
       break;
     case 'T':
-      Tourne():
       Consigne = Param[EtatCourant];
+      Tourne();
       break;
     case 'L':
       LassoHaut();
