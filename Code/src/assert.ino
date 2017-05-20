@@ -64,7 +64,7 @@ void RouleDroit()
 
   // envoie des commandes
   MoteurDroitTourne(true, PWMGauche);
-  MoteurDroitTourne(true, PWMDroit);
+  MoteurGaucheTourne(true, PWMDroit);
 
 
 
@@ -77,7 +77,7 @@ void RouleDroit()
     Parcouru = 0;
     EtatComplete = true;
     MoteurDroitTourne(true, 0);
-    MoteurDroitTourne(true, 0);
+    MoteurGaucheTourne(true, 0);
   }
 
   DateAssert = millis();

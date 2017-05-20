@@ -12,20 +12,24 @@ void InitActionneurs()
 
 void LassoHaut()
 {
-  Lasso.write(0);
+  Serial.println("LassoHaut");
+  Lasso.write(45);
   EtatComplete = true;
 }
 
 void LassoBas()
 {
-  Lasso.write(85);
+  Serial.println("LassoBas");
+  Lasso.write(0);
   EtatComplete = true;
 }
 
 
 void JoueFunnyAction()
 {
-  FunnyAction.write(20);
-  delay(30);
+  Serial.println("FunnyAction");
+  FunnyAction.write(180);
+  delay(800);
   FunnyAction.write(0);
+  EtatComplete = true;
 }

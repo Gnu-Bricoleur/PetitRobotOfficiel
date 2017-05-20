@@ -15,7 +15,7 @@ void setup()
   InitMachineEtat();
   Tirette = true;
   Serial.begin(9600);
-  Serial.println("Fin des initailisations !");
+  Serial.println("Fin des initialisations !");
 }
 void loop()
 {
@@ -25,16 +25,16 @@ void loop()
     Serial.println("Tirette enclenchée, en attente du début du match !");
   }
 
-
   //Check obstacle
 
   //Check temps ecoule
-  if (millis() - TempsDebut > 80000)
+  if (millis() - TempsDebut > 90000)
   {
     JoueFunnyAction();
     while(true)
     {
       // Fin du match, boucle infinie
+      Serial.println("Fin du match !");
     }
   }
 
