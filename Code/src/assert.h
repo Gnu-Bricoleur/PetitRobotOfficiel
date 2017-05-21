@@ -4,9 +4,10 @@
 #include "Arduino.h"
 #include "define.h"
 
-
-
-
+void ReculeDroitBO();
+void TourneGaucheBO();
+void RouleDroitBO();
+void TourneDroitBO();
 void AsssertIni();
 void RouleDroit();
 void Tourne();

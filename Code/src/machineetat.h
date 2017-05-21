@@ -7,7 +7,7 @@
 
 void MachineEtat();
 void InitMachineEtat();
-
+void InitActions();
 
 //A => Avancer; R=> reculer; W => wait; F => funny action; L=> Leve pince : B => baisse pince ; T => tourne
 

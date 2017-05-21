@@ -5,8 +5,8 @@
 #include "define.h"
 
 int PWMEcrete(int PWM);
-void MoteurDroitTourne(bool sens, int PWM);
+void MoteurDroitTourne(int PWM);
 void InitMoteur();
-void MoteurGaucheTourne(bool sens, int PWM);
+void MoteurGaucheTourne(int PWM);
 
 #endif // MOTEUR_H_INCLUDED

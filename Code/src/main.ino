@@ -9,12 +9,13 @@
 
 void setup()
 {
+    Serial.begin(9600);
   AsssertIni();
   InitMoteur();
   InitActionneurs();
   InitMachineEtat();
   Tirette = true;
-  Serial.begin(9600);
+
   Serial.println("Fin des initialisations !");
 }
 void loop()
@@ -26,6 +27,7 @@ void loop()
   }
 
   //Check obstacle
+  CheckObstacle();
 
   //Check temps ecoule
   if (millis() - TempsDebut > 90000)
@@ -34,7 +36,6 @@ void loop()
     while(true)
     {
       // Fin du match, boucle infinie
-      Serial.println("Fin du match !");
     }
   }
 

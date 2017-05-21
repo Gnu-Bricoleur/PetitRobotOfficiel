@@ -8,8 +8,161 @@ void AsssertIni()
   PrecisionAssert = 10;
   Serial3.begin(115200);
   Serial3.print("R\n"); // Reset de la carte codeuse
+  FinDroit = false;
+  FinGauche = false;
+  
 
 }
+
+void RouleDroitBO()
+{
+  LireCodeuse();
+  if (CodeuseDroit < Consigne)    // Si il reste de la ditance a parcourir pour la roue droite
+  {
+    if(abs(CodeuseDroit - CodeuseGauche) < PrecisionDroit)  //Si l'ecart entre les deux roues est suffisamment faible
+    {
+        MoteurDroitTourne(Vitesse[EtatCourant]);
+    }
+    else if (CodeuseDroit > CodeuseGauche)
+    {
+        MoteurDroitTourne(Vitesse[EtatCourant]-30);
+    }
+  }
+  else                          // Sinon, on arrete le moteur
+  {
+    MoteurDroitTourne(0);
+    FinDroit = true;
+  }
+
+  if (CodeuseGauche < Consigne)     // Si il reste de la ditance a parcourir pour la roue gauche
+  {
+    if(abs(CodeuseDroit - CodeuseGauche) < PrecisionDroit)
+    {
+        MoteurGaucheTourne(Vitesse[EtatCourant]);
+    }
+    else if (CodeuseGauche > CodeuseDroit)
+    {
+        MoteurGaucheTourne(Vitesse[EtatCourant]-30);
+    }
+  }
+  else
+  {
+    MoteurGaucheTourne(0);
+    FinGauche = true;
+  }
+  if (FinDroit == true && FinGauche == true)
+  {
+    Serial.println("Fin de rouler droit");
+    Serial.println(CodeuseDroit);
+    Serial.println(Consigne);
+    Parcouru = 0;
+    EtatComplete = true;
+    FinDroit = false;
+    FinGauche = false;
+    MoteurDroitTourne(0);
+    MoteurGaucheTourne(0);
+    Serial3.print("R\n"); // Reset de la carte codeuse
+    Serial.println(CodeuseDroit);
+  }
+}
+
+void ReculeDroitBO()
+{
+  LireCodeuse();
+  if (CodeuseDroit < Consigne)
+  {
+    MoteurDroitTourne(100);
+  }
+  else
+  {
+    MoteurDroitTourne(0);
+  }
+  if (CodeuseGauche < Consigne)
+  {
+    MoteurGaucheTourne(120);
+  }
+  else
+  {
+    MoteurGaucheTourne(0);
+  }
+  if (CodeuseDroit > Consigne && CodeuseGauche > Consigne)
+  {
+    Serial.println("Fin de rouler droit");
+    Serial.println(Consigne - CodeuseDroit);
+    Serial.println(Consigne - CodeuseGauche);
+    Parcouru = 0;
+    EtatComplete = true;
+    MoteurDroitTourne(0);
+    MoteurGaucheTourne(0);
+  }
+}
+
+
+
+
+void TourneDroiteBO()
+{
+  LireCodeuse();
+  if (CodeuseDroit < Consigne)
+  {
+    MoteurDroitTourne(-100);
+  }
+  else
+  {
+    MoteurDroitTourne(0);
+  }
+  if (CodeuseGauche < Consigne)
+  {
+    MoteurGaucheTourne(120);
+  }
+  else
+  {
+    MoteurGaucheTourne(0);
+  }
+  if (CodeuseDroit > Consigne && CodeuseGauche > Consigne)
+  {
+    Serial.println("Fin de tourner droit");
+    Serial.println(Consigne - CodeuseDroit);
+    Serial.println(Consigne - CodeuseGauche);
+    Parcouru = 0;
+    EtatComplete = true;
+    MoteurDroitTourne(0);
+    MoteurGaucheTourne(0);
+  }
+}
+
+
+void TourneGaucheBO()
+{
+  LireCodeuse();
+  if (CodeuseDroit < Consigne)
+  {
+    MoteurDroitTourne(100);
+  }
+  else
+  {
+    MoteurDroitTourne(0);
+  }
+  if (CodeuseGauche < Consigne)
+  {
+    MoteurGaucheTourne(-120);
+  }
+  else
+  {
+    MoteurGaucheTourne(0);
+  }
+  if (CodeuseDroit > Consigne && CodeuseGauche > Consigne)
+  {
+    Serial.println("Fin de tourner gauche");
+    Serial.println(Consigne - CodeuseDroit);
+    Serial.println(Consigne - CodeuseGauche);
+    Parcouru = 0;
+    EtatComplete = true;
+    MoteurDroitTourne(0);
+    MoteurGaucheTourne(0);
+  }
+}
+
 
 
 void RouleDroit()
@@ -45,12 +198,10 @@ void RouleDroit()
   PWMDroit = PWMEcrete(PWMDroit);
   PWMGauche = PWMEcrete(PWMGauche);
 
-  Serial.println("PWM");
-  Serial.println(PWMDroit);
-  Serial.println(PWMGauche);
+
 
   // roule droit
-  if (CodeuseDroit - CodeuseGauche > PrecisionDroit)
+  if (abs(CodeuseDroit - CodeuseGauche) > PrecisionDroit)
   {
     if (CodeuseDroit > CodeuseGauche)
     {
@@ -62,22 +213,30 @@ void RouleDroit()
     }
   }
 
+
+
   // envoie des commandes
-  MoteurDroitTourne(true, PWMGauche);
-  MoteurGaucheTourne(true, PWMDroit);
+
+
+  MoteurDroitTourne(PWMGauche);
+  MoteurGaucheTourne(PWMDroit);
 
 
 
-  Parcouru = (CodeuseDroit + CodeuseGauche)/2;
+  Parcouru = CodeuseDroit; // On ne s'asservi que sur la distance parcouru par la roue droite
+  //Car la roue gauche doit etre pas loing normalement a cause de la condition roule droit
 
 
 
-  if (Consigne - Parcouru < PrecisionAssert)
+  if (abs(Consigne - CodeuseDroit) < PrecisionAssert && abs(Consigne - CodeuseGauche) < PrecisionAssert)
   {
+    Serial.println("Fin de rouler droit");
+    Serial.println(Consigne - CodeuseDroit);
+    Serial.println(Consigne - CodeuseGauche);
     Parcouru = 0;
     EtatComplete = true;
-    MoteurDroitTourne(true, 0);
-    MoteurGaucheTourne(true, 0);
+    MoteurDroitTourne(0);
+    MoteurGaucheTourne(0);
   }
 
   DateAssert = millis();

@@ -17,11 +17,12 @@
 #define GpioTirette 22
 #define GpioJaune 26
 #define GpioBleu 24
-
+#define DetectAvant A9
+#define DetectArriere A8
 
 //definition des constantes
 
-#define PWMMax 100
+#define PWMMax 200
 
 
 
@@ -54,7 +55,8 @@ int PWMGauche;
 int PrecisionDroit;
 int Parcouru;
 int PrecisionAssert;
-
+bool FinDroit;
+bool FinGauche;
 
 
 //Pour la machine d'état
@@ -62,7 +64,7 @@ int EtatCourant;
 char Actions[100];
 //A => Avancer; R=> reculer; W => wait; F => funny action; L=> Leve pince : B => baisse pince ; T => tourne
 int Param[100];
-
+int Vitesse[100];
 bool EtatComplete;
 
 

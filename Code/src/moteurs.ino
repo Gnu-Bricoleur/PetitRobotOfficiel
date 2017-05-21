@@ -3,7 +3,7 @@
 
 void InitMoteur()
 {
-  
+
   pinMode(MoteurGauche, OUTPUT);
   pinMode(MoteurDroit, OUTPUT);
   pinMode(In1MoteurDroit, OUTPUT);
@@ -27,9 +27,9 @@ int PWMEcrete(int PWM)
 
 // donner une commande au moteur droit
 // sens, puissance
-void MoteurDroitTourne(bool sens, int PWM)
+void MoteurDroitTourne(int PWM)
 {
-  if (sens == true)
+  if (PWM > 0)
   {
     digitalWrite(In1MoteurDroit, LOW);
     digitalWrite(In2MoteurDroit, HIGH);
@@ -39,15 +39,18 @@ void MoteurDroitTourne(bool sens, int PWM)
     digitalWrite(In1MoteurDroit, HIGH);
     digitalWrite(In2MoteurDroit, LOW);
   }
+  PWM = abs(PWM);
   PWM = PWMEcrete(PWM);
   analogWrite(MoteurDroit, PWM);
+
+
 }
 
 
 
-void MoteurGaucheTourne(bool sens, int PWM)
+void MoteurGaucheTourne(int PWM)
 {
-  if (sens == true)
+  if (PWM > 0)
   {
     digitalWrite(In3MoteurGauche, LOW);
     digitalWrite(In4MoteurGauche, HIGH);
@@ -57,6 +60,10 @@ void MoteurGaucheTourne(bool sens, int PWM)
     digitalWrite(In3MoteurGauche, HIGH);
     digitalWrite(In4MoteurGauche, LOW);
   }
+  PWM = abs(PWM);
   PWM = PWMEcrete(PWM);
   analogWrite(MoteurGauche, PWM);
+
+
+
 }
