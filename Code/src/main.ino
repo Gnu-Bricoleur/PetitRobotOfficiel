@@ -9,29 +9,33 @@
 
 void setup()
 {
-    Serial.begin(9600);
-  AsssertIni();
+  //Initialisations des différentes variables
+  InitAsssert();
   InitMoteur();
   InitActionneurs();
   InitMachineEtat();
-  Tirette = true;
-
+  InitOrphelins();
+  //Le robot peut demarrer
+  Serial.begin(9600);
   Serial.println("Fin des initialisations !");
 }
+
+
 void loop()
 {
   while(Tirette)
   {
+    Serial.println("Tirette enclenchée, en attente du début du match ...");
     CheckTirette();
-    Serial.println("Tirette enclenchée, en attente du début du match !");
   }
 
   //Check obstacle
   CheckObstacle();
 
   //Check temps ecoule
-  if (millis() - TempsDebut > 90000)
+  if (millis() - TempsDebut > 95000)
   {
+    timer.disable(TimerId);
     JoueFunnyAction();
     while(true)
     {
@@ -42,9 +46,8 @@ void loop()
   //Machine d'état
   MachineEtat();
 
-  //update assert
+  //Assert PeriodiqueAssert
+  timer.run();
 
-  //Pour tests
-  //MoteurDroitTourne(true, 100);
-  //MoteurGaucheTourne(true, 100);
+
 }

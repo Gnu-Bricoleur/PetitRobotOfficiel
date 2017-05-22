@@ -15,16 +15,16 @@
 #define LassoPin 42
 #define FunnyActionPin 40
 #define GpioTirette 22
-#define GpioJaune 26
-#define GpioBleu 24
-#define DetectAvant A9
-#define DetectArriere A8
+#define GpioJaune 24
+#define GpioBleu 26
+#define DetectAvant A8
+#define DetectArriere A9
 
 //definition des constantes
 
 #define PWMMax 200
-
-
+#define FrequenceEchantillonnage 50
+#define NbTickPeriodique 100
 
 
 
@@ -36,6 +36,9 @@
 
 #define Separateur ';'
 
+
+
+int TimerId;
 int CodeuseDroit;
 int CodeuseGauche;
 unsigned long Temps;
@@ -58,6 +61,8 @@ int PrecisionAssert;
 bool FinDroit;
 bool FinGauche;
 
+//Pour verifier Frequence assert
+//unsigned long DateDernierPassage;
 
 //Pour la machine d'état
 int EtatCourant;

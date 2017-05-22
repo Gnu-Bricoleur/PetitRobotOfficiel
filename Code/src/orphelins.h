@@ -6,5 +6,7 @@
 
 void CheckTirette();
 void CheckObstacle();
+void InitOrphelins();
+void Attente();
 
 #endif // ASSERT_H_INCLUDED

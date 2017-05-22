@@ -3,17 +3,16 @@
 
 #include "Arduino.h"
 #include "define.h"
+#include <SimpleTimer.h>
 
-void ReculeDroitBO();
-void TourneGaucheBO();
-void RouleDroitBO();
-void TourneDroitBO();
-void AsssertIni();
+void InitAsssert();
 void RouleDroit();
 void Tourne();
 void LireCodeuse();
 void splitString(String message, char separator, String *data);
+void PeriodiqueAssert();
 
+  SimpleTimer timer;
 
 
 #endif // ASSERT_H_INCLUDED

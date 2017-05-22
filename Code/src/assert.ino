@@ -1,7 +1,7 @@
 #include "assert.h"
 
 
-void AsssertIni()
+void InitAsssert()
 {
   Parcouru = 0;
   PrecisionDroit = 10;
@@ -10,157 +10,17 @@ void AsssertIni()
   Serial3.print("R\n"); // Reset de la carte codeuse
   FinDroit = false;
   FinGauche = false;
-  
-
-}
-
-void RouleDroitBO()
-{
-  LireCodeuse();
-  if (CodeuseDroit < Consigne)    // Si il reste de la ditance a parcourir pour la roue droite
-  {
-    if(abs(CodeuseDroit - CodeuseGauche) < PrecisionDroit)  //Si l'ecart entre les deux roues est suffisamment faible
-    {
-        MoteurDroitTourne(Vitesse[EtatCourant]);
-    }
-    else if (CodeuseDroit > CodeuseGauche)
-    {
-        MoteurDroitTourne(Vitesse[EtatCourant]-30);
-    }
-  }
-  else                          // Sinon, on arrete le moteur
-  {
-    MoteurDroitTourne(0);
-    FinDroit = true;
-  }
-
-  if (CodeuseGauche < Consigne)     // Si il reste de la ditance a parcourir pour la roue gauche
-  {
-    if(abs(CodeuseDroit - CodeuseGauche) < PrecisionDroit)
-    {
-        MoteurGaucheTourne(Vitesse[EtatCourant]);
-    }
-    else if (CodeuseGauche > CodeuseDroit)
-    {
-        MoteurGaucheTourne(Vitesse[EtatCourant]-30);
-    }
-  }
-  else
-  {
-    MoteurGaucheTourne(0);
-    FinGauche = true;
-  }
-  if (FinDroit == true && FinGauche == true)
-  {
-    Serial.println("Fin de rouler droit");
-    Serial.println(CodeuseDroit);
-    Serial.println(Consigne);
-    Parcouru = 0;
-    EtatComplete = true;
-    FinDroit = false;
-    FinGauche = false;
-    MoteurDroitTourne(0);
-    MoteurGaucheTourne(0);
-    Serial3.print("R\n"); // Reset de la carte codeuse
-    Serial.println(CodeuseDroit);
-  }
-}
-
-void ReculeDroitBO()
-{
-  LireCodeuse();
-  if (CodeuseDroit < Consigne)
-  {
-    MoteurDroitTourne(100);
-  }
-  else
-  {
-    MoteurDroitTourne(0);
-  }
-  if (CodeuseGauche < Consigne)
-  {
-    MoteurGaucheTourne(120);
-  }
-  else
-  {
-    MoteurGaucheTourne(0);
-  }
-  if (CodeuseDroit > Consigne && CodeuseGauche > Consigne)
-  {
-    Serial.println("Fin de rouler droit");
-    Serial.println(Consigne - CodeuseDroit);
-    Serial.println(Consigne - CodeuseGauche);
-    Parcouru = 0;
-    EtatComplete = true;
-    MoteurDroitTourne(0);
-    MoteurGaucheTourne(0);
-  }
+  TimerId = timer.setInterval(1000/FrequenceEchantillonnage, PeriodiqueAssert);
 }
 
 
-
-
-void TourneDroiteBO()
+void PeriodiqueAssert()
 {
-  LireCodeuse();
-  if (CodeuseDroit < Consigne)
-  {
-    MoteurDroitTourne(-100);
-  }
-  else
-  {
-    MoteurDroitTourne(0);
-  }
-  if (CodeuseGauche < Consigne)
-  {
-    MoteurGaucheTourne(120);
-  }
-  else
-  {
-    MoteurGaucheTourne(0);
-  }
-  if (CodeuseDroit > Consigne && CodeuseGauche > Consigne)
-  {
-    Serial.println("Fin de tourner droit");
-    Serial.println(Consigne - CodeuseDroit);
-    Serial.println(Consigne - CodeuseGauche);
-    Parcouru = 0;
-    EtatComplete = true;
-    MoteurDroitTourne(0);
-    MoteurGaucheTourne(0);
-  }
-}
-
-
-void TourneGaucheBO()
-{
-  LireCodeuse();
-  if (CodeuseDroit < Consigne)
-  {
-    MoteurDroitTourne(100);
-  }
-  else
-  {
-    MoteurDroitTourne(0);
-  }
-  if (CodeuseGauche < Consigne)
-  {
-    MoteurGaucheTourne(-120);
-  }
-  else
-  {
-    MoteurGaucheTourne(0);
-  }
-  if (CodeuseDroit > Consigne && CodeuseGauche > Consigne)
-  {
-    Serial.println("Fin de tourner gauche");
-    Serial.println(Consigne - CodeuseDroit);
-    Serial.println(Consigne - CodeuseGauche);
-    Parcouru = 0;
-    EtatComplete = true;
-    MoteurDroitTourne(0);
-    MoteurGaucheTourne(0);
-  }
+  Serial.println(millis() - DateDernierPassage);
+  Serial.println("liesh");
+  DateDernierPassage = millis();
+  MoteurDroitTourne(100);
+  MoteurGaucheTourne(100);
 }
 
 
@@ -190,9 +50,6 @@ void RouleDroit()
   PWMGauche = P*ErreurGauche + I*SommeErreurGauche + D*DeltaErreurGauche;
   AncienneErreurGauche = ErreurGauche;
 
-  Serial.println("erreur");
-  Serial.println(ErreurDroit);
-  Serial.println(ErreurGauche);
 
   //Ecrete commandes
   PWMDroit = PWMEcrete(PWMDroit);
@@ -230,9 +87,6 @@ void RouleDroit()
 
   if (abs(Consigne - CodeuseDroit) < PrecisionAssert && abs(Consigne - CodeuseGauche) < PrecisionAssert)
   {
-    Serial.println("Fin de rouler droit");
-    Serial.println(Consigne - CodeuseDroit);
-    Serial.println(Consigne - CodeuseGauche);
     Parcouru = 0;
     EtatComplete = true;
     MoteurDroitTourne(0);
