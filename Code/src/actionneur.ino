@@ -6,7 +6,7 @@ void InitActionneurs()
   Lasso.attach(LassoPin);
   FunnyAction.attach(FunnyActionPin);
   LassoHaut();
-  FunnyAction.write(0);
+  FunnyAction.write(90);
 }
 
 
@@ -30,7 +30,7 @@ void JoueFunnyAction()
   Serial.println("FunnyAction");
   FunnyAction.write(180);
   delay(800);
-  FunnyAction.write(0);
+  FunnyAction.write(90);
   EtatComplete = true;
   Serial.println("Fin du match !");
 }

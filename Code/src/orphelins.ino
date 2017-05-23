@@ -37,9 +37,9 @@ void CheckTirette()
 
 void CheckObstacle()
 {
-  if (/*Actions[EtatCourant] == 'A' && */digitalRead(DetectAvant)==HIGH)
+  if (Actions[EtatCourant] == 'A' && digitalRead(DetectAvant)==HIGH)
   {
-    Serial.println("Debut detect Avant (!! ATENTION COMMENTAIRE)");
+    Serial.println("Debut detect Avant");
     while(digitalRead(DetectAvant)==HIGH)
     {
       MoteurGaucheTourne(0);
@@ -47,9 +47,9 @@ void CheckObstacle()
     }
     Serial.println("Fin detect Avant");
   }
-  if (/*Actions[EtatCourant] == 'R' && */digitalRead(DetectArriere)==HIGH)
+  if (Actions[EtatCourant] == 'R' && digitalRead(DetectArriere)==HIGH)
   {
-    Serial.println("Debut detect Avant (!! ATENTION COMMENTAIRE)");
+    Serial.println("Debut detect Avant");
     while (digitalRead(DetectArriere)==HIGH)
     {
       MoteurGaucheTourne(0);

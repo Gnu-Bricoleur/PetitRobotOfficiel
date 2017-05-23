@@ -6,12 +6,12 @@
 // definition des pins de la Mega
 
 
-#define MoteurDroit 2
-#define MoteurGauche 3
-#define In1MoteurDroit 28
-#define In2MoteurDroit 30
-#define In3MoteurGauche 32
-#define In4MoteurGauche 34
+#define MoteurDroit 3
+#define MoteurGauche 2
+#define In1MoteurDroit 32
+#define In2MoteurDroit 34
+#define In3MoteurGauche 28
+#define In4MoteurGauche 30
 #define LassoPin 42
 #define FunnyActionPin 40
 #define GpioTirette 22
@@ -29,18 +29,31 @@
 
 
 //definition des variables globales
-//Pour l'assert
-#define P 10
-#define I 0.001
-#define D 0.01
+//Pour l'assert en vitesse
+#define PD 1.2 //:-)
+#define ID 0.0001 //;-)
+#define DD 0.5  //;-))
+
+#define PG 1.5
+#define IG 0.0001
+#define DG 0.5
+
+#define PA 0.1
+#define IA 0
+#define DA 0
 
 #define Separateur ';'
 
-
+#define MaxI 100
+#define NombreValeursI 25
+int ListeIDroit[NombreValeursI];
+int ListeIGauche[NombreValeursI];
 
 int TimerId;
 int CodeuseDroit;
 int CodeuseGauche;
+int AncienneCodeuseDroit;
+int AncienneCodeuseGauche;
 unsigned long Temps;
 unsigned long DateAssert;
 int ErreurDroit;
@@ -50,7 +63,7 @@ int ErreurGauche;
 int SommeErreurGauche;
 int DeltaErreurGauche;
 int AncienneErreur;
-int Consigne;
+int ConsigneVitesse;
 int AncienneErreurDroit;
 int AncienneErreurGauche;
 int PWMDroit;
@@ -60,9 +73,19 @@ int Parcouru;
 int PrecisionAssert;
 bool FinDroit;
 bool FinGauche;
+int Consigne;
+int IndexTableau;
+
+
+int ErreurAngulaire;
+int ListeIAngulaire[NombreValeursI];
+int SommeErreurAngulaire;
+int DeltaErreurAngulaire;
+int AncienneErreurAngulaire;
+int PWMAngulaire;
 
 //Pour verifier Frequence assert
-//unsigned long DateDernierPassage;
+unsigned long DateDernierPassage;
 
 //Pour la machine d'état
 int EtatCourant;

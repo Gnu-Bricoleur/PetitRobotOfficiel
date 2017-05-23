@@ -16,7 +16,7 @@ void setup()
   InitMachineEtat();
   InitOrphelins();
   //Le robot peut demarrer
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("Fin des initialisations !");
 }
 

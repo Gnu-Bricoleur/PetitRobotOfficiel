@@ -6,28 +6,116 @@ void InitAsssert()
   Parcouru = 0;
   PrecisionDroit = 10;
   PrecisionAssert = 10;
+  AncienneErreurDroit = 0;
+  AncienneErreurGauche = 0;
+  AncienneErreurAngulaire = 0;
   Serial3.begin(115200);
   Serial3.print("R\n"); // Reset de la carte codeuse
   FinDroit = false;
   FinGauche = false;
   TimerId = timer.setInterval(1000/FrequenceEchantillonnage, PeriodiqueAssert);
+  IndexTableau = 0;
 }
 
 
 void PeriodiqueAssert()
 {
+  LireCodeuse();
+  //Pour verifier la frequence du pid
+  Serial.print("Freq PID : ");
   Serial.println(millis() - DateDernierPassage);
-  Serial.println("liesh");
   DateDernierPassage = millis();
-  MoteurDroitTourne(100);
-  MoteurGaucheTourne(100);
+
+  //min 40
+  ConsigneVitesse = 50;
+
+
+//##############################################################################
+//###########   ASSERT LINEAIRE   ##############################################
+  ErreurDroit = ConsigneVitesse - (CodeuseDroit - AncienneCodeuseDroit); //P
+  ListeIDroit[IndexTableau%NombreValeursI] = ErreurDroit;                //I
+  for(int j=0; j<NombreValeursI; j++)
+  {
+    SommeErreurDroit += ListeIDroit[j%NombreValeursI];
+  }
+  if (SommeErreurDroit > MaxI)
+  {
+    SommeErreurDroit = MaxI;
+  }
+  DeltaErreurDroit = ErreurDroit - AncienneErreurDroit;                   //D
+  PWMDroit = PD*ErreurDroit + ID*SommeErreurDroit + DD*DeltaErreurDroit;
+  AncienneErreurDroit = ErreurDroit;
+  AncienneCodeuseDroit = CodeuseDroit;
+
+
+
+  ErreurGauche = ConsigneVitesse - (CodeuseGauche - AncienneCodeuseGauche);//P
+  ListeIGauche[IndexTableau%NombreValeursI] = ErreurGauche;                //I
+  for(int j=0; j<NombreValeursI; j++)
+  {
+    SommeErreurGauche += ListeIGauche[j%NombreValeursI];
+  }
+  if (SommeErreurGauche > MaxI)
+  {
+    SommeErreurGauche = MaxI;
+  }
+  DeltaErreurGauche = ErreurGauche - AncienneErreurGauche;
+  PWMGauche = PG*ErreurGauche + IG*SommeErreurGauche + DG*DeltaErreurGauche;  //D
+  AncienneErreurGauche = ErreurGauche;
+  AncienneCodeuseGauche = CodeuseGauche;
+
+
+
+  //############################################################################
+  //##################   ASSERT ANGULAIRE   ####################################
+  PWMDroit = PWMEcrete(PWMDroit);
+  PWMGauche = PWMEcrete(PWMGauche);
+
+
+  ErreurAngulaire = CodeuseDroit - CodeuseGauche;
+  ListeIAngulaire[IndexTableau%NombreValeursI] = ErreurAngulaire;            //I
+  for(int j=0; j<NombreValeursI; j++)
+  {
+    SommeErreurAngulaire += ListeIAngulaire[j%NombreValeursI];
+  }
+  if (SommeErreurAngulaire > MaxI)
+  {
+    SommeErreurAngulaire = MaxI;
+  }
+  DeltaErreurAngulaire = ErreurAngulaire - AncienneErreurAngulaire;
+  PWMAngulaire = PA*ErreurAngulaire + IA*SommeErreurAngulaire + DA*DeltaErreurAngulaire;  //D
+  AncienneErreurAngulaire = ErreurAngulaire;
+
+  PWMDroit += PWMAngulaire;
+  PWMGauche -= PWMAngulaire;
+
+  IndexTableau += 1;
+
+  Serial.print("EA : ");
+  Serial.println(ErreurAngulaire);
+
+  Serial.print("D : ");
+  Serial.print(ErreurDroit);
+  Serial.print(" ; ");
+  Serial.println(PWMDroit);
+
+  Serial.print("G : ");
+  Serial.print(ErreurGauche);
+  Serial.print(" ; ");
+  Serial.println(PWMGauche);
+
+  MoteurDroitTourne(PWMDroit);
+  MoteurGaucheTourne(PWMGauche);
+
+  //MoteurDroitTourne(100);
+  //MoteurGaucheTourne(150);
 }
 
 
 
 void RouleDroit()
 {
-
+/*
   LireCodeuse();
 
 //  Temps = millis();
@@ -94,6 +182,7 @@ void RouleDroit()
   }
 
   DateAssert = millis();
+  */
 }
 
 void Tourne()

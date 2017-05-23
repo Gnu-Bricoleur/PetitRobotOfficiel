@@ -11,28 +11,29 @@ void InitActions()
 {
   if (Bleu == true)
   {
-    Actions[0] = 'A';//Avance
-    Param[0] = 3000;
-    Vitesse[0] = 200;
-    Actions[1] = 'A';//Avance
-    Param[1] = 1000;
-    Vitesse[1] = 100;
+
+//    Actions[0] = 'A';//Avance
+//    Param[0] = 30;
+//    Vitesse[0] = 200;
+//    Actions[1] = 'A';//Avance
+//    Param[1] = 10;
+//    Vitesse[1] = 100;
   //  Actions[1] = 'L';//Leve le bras
   //  Actions[2] = 'F';//funny action
-    Actions[2] = 'E';// end of the line
+    Actions[0] = 'E';// end of the line
     Serial.println("Blue side !");
   }
   else
   {
-    Actions[0] = 'A';//Avance
-    Param[0] = 3000; //Distance
-    Vitesse[0] = 200;
-    Actions[1] = 'A';//Avance
-    Param[1] = 2000;
-    Vitesse[1] = 100;
+//    Actions[0] = 'A';//Avance
+//    Param[0] = 30; //Distance
+//    Vitesse[0] = 200;
+//    Actions[1] = 'A';//Avance
+//    Param[1] = 2;
+//    Vitesse[1] = 100;
   //  Actions[1] = 'L';//Leve le bras
   //  Actions[2] = 'F';//funny action
-    Actions[2] = 'E';// end of the line
+    Actions[0] = 'E';// end of the line
     Serial.println("Yellow side !");
   }
 }
