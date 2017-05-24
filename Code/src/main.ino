@@ -33,7 +33,7 @@ void loop()
   CheckObstacle();
 
   //Check temps ecoule
-  if (millis() - TempsDebut > 95000)
+  if (millis() - TempsDebut > 91000)
   {
     timer.disable(TimerId);
     JoueFunnyAction();

@@ -4,6 +4,8 @@
 void InitOrphelins()
 {
     Tirette = true;
+    DebutAttente = false;
+    TempsDebutAttente = 0;
 }
 
 
@@ -65,8 +67,18 @@ void CheckObstacle()
 
 void Attente()
 {
-  Serial.println("Debut Attente");
-  delay(Param[EtatCourant]);
-  Serial.println(" Fin Attente ");
-  EtatComplete = true;
+  if (DebutAttente == false)
+  {
+      Serial.println("Debut Attente");
+      TempsDebutAttente = millis();
+      DebutAttente = true;
+  }
+
+  if (Param[EtatCourant] < millis() - TempsDebutAttente)
+  {
+    Serial.println(" Fin Attente ");
+    DebutAttente = false;
+    EtatComplete = true;
+  }
+  Serial.println(millis() - TempsDebutAttente);
 }

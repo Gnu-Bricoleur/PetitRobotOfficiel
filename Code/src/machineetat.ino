@@ -32,15 +32,16 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
   }
   else
   {
-    Actions[0] = 'R';//Avance
-    Param[0] = 1000; //Distance
+    Actions[0] = 'A';//Avance
+    Param[0] = 2000; //Distance
     Vitesse[0] = 60;
-//    Actions[1] = 'A';//Avance
-//    Param[1] = 2;
-//    Vitesse[1] = 100;
-  //  Actions[1] = 'L';//Leve le bras
-  //  Actions[2] = 'F';//funny action
-    Actions[1] = 'E';// end of the line
+    Actions[1] = 'W';//Avance
+    Param[1] = 2000;
+    Actions[2] = 'A';
+    Param[2] = 2000;
+    Vitesse[2] = 60;
+    Actions[3] = 'B';//funny action
+    Actions[4] = 'E';// end of the line
     Serial.println("Yellow side !");
   }
 }
@@ -50,6 +51,7 @@ void MachineEtat()
 {
   Consigne = Param[EtatCourant];
   char Action = Actions[EtatCourant];
+  //Serial.println(Actions[EtatCourant]);
   switch(Action)
   {
     case 'A':                         //Avancer

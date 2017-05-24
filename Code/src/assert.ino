@@ -31,94 +31,69 @@ void PeriodiqueAssert()
 
 if (Actions[EtatCourant] == 'A' || Actions[EtatCourant] == 'R')
 {
-//##############################################################################
-//###########   ASSERT LINEAIRE   ##############################################
-  ErreurDroit = ConsigneVitesse - (CodeuseDroit - AncienneCodeuseDroit); //P
-  ListeIDroit[IndexTableau%NombreValeursI] = ErreurDroit;                //I
-  for(int j=0; j<NombreValeursI; j++)
-  {
-    SommeErreurDroit += ListeIDroit[j%NombreValeursI];
+  //##############################################################################
+  //###########   ASSERT LINEAIRE   ##############################################
+    ErreurDroit = ConsigneVitesse - (CodeuseDroit - AncienneCodeuseDroit); //P
+    ListeIDroit[IndexTableau%NombreValeursI] = ErreurDroit;                //I
+    for(int j=0; j<NombreValeursI; j++)
+    {
+      SommeErreurDroit += ListeIDroit[j%NombreValeursI];
+    }
+    if (SommeErreurDroit > MaxI)
+    {
+      SommeErreurDroit = MaxI;
+    }
+    DeltaErreurDroit = ErreurDroit - AncienneErreurDroit;                   //D
+    PWMDroit = PD*ErreurDroit + ID*SommeErreurDroit + DD*DeltaErreurDroit;
+    AncienneErreurDroit = ErreurDroit;
+    AncienneCodeuseDroit = CodeuseDroit;
+
+
+
+    ErreurGauche = ConsigneVitesse - (CodeuseGauche - AncienneCodeuseGauche);//P
+    ListeIGauche[IndexTableau%NombreValeursI] = ErreurGauche;                //I
+    for(int j=0; j<NombreValeursI; j++)
+    {
+      SommeErreurGauche += ListeIGauche[j%NombreValeursI];
+    }
+    if (SommeErreurGauche > MaxI)
+    {
+      SommeErreurGauche = MaxI;
+    }
+    DeltaErreurGauche = ErreurGauche - AncienneErreurGauche;
+    PWMGauche = PG*ErreurGauche + IG*SommeErreurGauche + DG*DeltaErreurGauche;  //D
+    AncienneErreurGauche = ErreurGauche;
+    AncienneCodeuseGauche = CodeuseGauche;
   }
-  if (SommeErreurDroit > MaxI)
+
+  if(Actions[EtatCourant] == 'A' || Actions[EtatCourant] == 'R' || Actions[EtatCourant] == 'T')
   {
-    SommeErreurDroit = MaxI;
+    //############################################################################
+    //##################   ASSERT ANGULAIRE   ####################################
+    PWMDroit = PWMEcrete(PWMDroit);
+    PWMGauche = PWMEcrete(PWMGauche);
+
+
+    ErreurAngulaire = CodeuseDroit - CodeuseGauche;                            //P
+    ListeIAngulaire[IndexTableau%NombreValeursI] = ErreurAngulaire;            //I
+    for(int j=0; j<NombreValeursI; j++)
+    {
+      SommeErreurAngulaire += ListeIAngulaire[j%NombreValeursI];
+    }
+    if (SommeErreurAngulaire > MaxI)
+    {
+      SommeErreurAngulaire = MaxI;
+    }
+    DeltaErreurAngulaire = ErreurAngulaire - AncienneErreurAngulaire;
+    PWMAngulaire = PA*ErreurAngulaire + IA*SommeErreurAngulaire + DA*DeltaErreurAngulaire;  //D
+    AncienneErreurAngulaire = ErreurAngulaire;
+
+    PWMDroit += PWMAngulaire;
+    PWMGauche -= PWMAngulaire;
   }
-  DeltaErreurDroit = ErreurDroit - AncienneErreurDroit;                   //D
-  PWMDroit = PD*ErreurDroit + ID*SommeErreurDroit + DD*DeltaErreurDroit;
-  AncienneErreurDroit = ErreurDroit;
-  AncienneCodeuseDroit = CodeuseDroit;
-
-
-
-  ErreurGauche = ConsigneVitesse - (CodeuseGauche - AncienneCodeuseGauche);//P
-  ListeIGauche[IndexTableau%NombreValeursI] = ErreurGauche;                //I
-  for(int j=0; j<NombreValeursI; j++)
-  {
-    SommeErreurGauche += ListeIGauche[j%NombreValeursI];
-  }
-  if (SommeErreurGauche > MaxI)
-  {
-    SommeErreurGauche = MaxI;
-  }
-  DeltaErreurGauche = ErreurGauche - AncienneErreurGauche;
-  PWMGauche = PG*ErreurGauche + IG*SommeErreurGauche + DG*DeltaErreurGauche;  //D
-  AncienneErreurGauche = ErreurGauche;
-  AncienneCodeuseGauche = CodeuseGauche;
-
-
-
-  //############################################################################
-  //##################   ASSERT ANGULAIRE   ####################################
-  PWMDroit = PWMEcrete(PWMDroit);
-  PWMGauche = PWMEcrete(PWMGauche);
-
-
-  ErreurAngulaire = CodeuseDroit - CodeuseGauche;
-  ListeIAngulaire[IndexTableau%NombreValeursI] = ErreurAngulaire;            //I
-  for(int j=0; j<NombreValeursI; j++)
-  {
-    SommeErreurAngulaire += ListeIAngulaire[j%NombreValeursI];
-  }
-  if (SommeErreurAngulaire > MaxI)
-  {
-    SommeErreurAngulaire = MaxI;
-  }
-  DeltaErreurAngulaire = ErreurAngulaire - AncienneErreurAngulaire;
-  PWMAngulaire = PA*ErreurAngulaire + IA*SommeErreurAngulaire + DA*DeltaErreurAngulaire;  //D
-  AncienneErreurAngulaire = ErreurAngulaire;
-
-  PWMDroit += PWMAngulaire;
-  PWMGauche -= PWMAngulaire;
-
   IndexTableau += 1;              // Pour les trois PID
-}
-else if (Actions[EtatCourant] = 'T')
-{
-  //############################################################################
-  //##################   ASSERT ANGULAIRE   ####################################
-  PWMDroit = PWMEcrete(PWMDroit);
-  PWMGauche = PWMEcrete(PWMGauche);
 
 
-  ErreurAngulaire = CodeuseDroit - CodeuseGauche;
-  ListeIAngulaire[IndexTableau%NombreValeursI] = ErreurAngulaire;            //I
-  for(int j=0; j<NombreValeursI; j++)
-  {
-    SommeErreurAngulaire += ListeIAngulaire[j%NombreValeursI];
-  }
-  if (SommeErreurAngulaire > MaxI)
-  {
-    SommeErreurAngulaire = MaxI;
-  }
-  DeltaErreurAngulaire = ErreurAngulaire - AncienneErreurAngulaire;
-  PWMAngulaire = PA*ErreurAngulaire + IA*SommeErreurAngulaire + DA*DeltaErreurAngulaire;  //D
-  AncienneErreurAngulaire = ErreurAngulaire;
-
-  PWMDroit += PWMAngulaire;
-  PWMGauche -= PWMAngulaire;
-
-  IndexTableau += 1;              // Pour les trois PID
-}
 
 
 /*  //Pour ggner de la frequence commenter l'asser
@@ -136,9 +111,16 @@ else if (Actions[EtatCourant] = 'T')
   Serial.print(" ; ");
   Serial.println(PWMGauche);
   */
-
-  MoteurDroitTourne(PWMDroit);
-  MoteurGaucheTourne(PWMGauche);
+  if(Actions[EtatCourant] == 'A' || Actions[EtatCourant] == 'R' || Actions[EtatCourant] == 'T')
+  {
+    MoteurDroitTourne(PWMDroit);
+    MoteurGaucheTourne(PWMGauche);
+  }
+  else
+  {
+    MoteurDroitTourne(0);
+    MoteurGaucheTourne(0);
+  }
   //Serial.println(PWMAngulaire);
   //Serial.println(PWMDroit);
   //Serial.println(PWMGauche);
@@ -196,6 +178,7 @@ void RouleDroit()
   if (- CodeuseDroit >  Param[EtatCourant])// Le robot roule a peut pres droit, CodeuseDroit suffit
   {
     RaZErreur();
+    Serial.println("Fin roule droit");
     EtatComplete = true;
   }
   else
@@ -204,6 +187,7 @@ void RouleDroit()
     ConsigneAngle = 0;
   }
 }
+
 
 void Tourne()
 {

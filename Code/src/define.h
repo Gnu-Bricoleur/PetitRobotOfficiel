@@ -104,6 +104,11 @@ bool EtatComplete;
  unsigned long TempsDebut;
 
 
+//pour la fonction d'attente
+bool DebutAttente;
+unsigned long TempsDebutAttente;
+
+
 
 
 #endif // DEFINE_H_INCLUDED
