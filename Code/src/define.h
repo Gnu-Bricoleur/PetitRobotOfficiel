@@ -49,6 +49,8 @@
 int ListeIDroit[NombreValeursI];
 int ListeIGauche[NombreValeursI];
 
+
+int ConsigneAngle;
 int TimerId;
 int CodeuseDroit;
 int CodeuseGauche;

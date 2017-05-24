@@ -6,6 +6,7 @@ void InitActionneurs()
   Lasso.attach(LassoPin);
   FunnyAction.attach(FunnyActionPin);
   LassoHaut();
+  EtatComplete = false;
   FunnyAction.write(90);
 }
 
@@ -15,6 +16,8 @@ void LassoHaut()
   Serial.println("LassoHaut");
   Lasso.write(45);
   EtatComplete = true;
+  delay(500);
+
 }
 
 void LassoBas()

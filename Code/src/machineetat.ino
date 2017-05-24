@@ -7,33 +7,40 @@ void InitMachineEtat()
 }
 
 
-void InitActions()
+void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
 {
   if (Bleu == true)
   {
 
-//    Actions[0] = 'A';//Avance
-//    Param[0] = 30;
-//    Vitesse[0] = 200;
-//    Actions[1] = 'A';//Avance
+    Actions[0] = 'A';//Avance
+    Param[0] = 3000;
+    Vitesse[0] = 60;
+    Actions[1] = 'B';//Avance
+    Actions[2] = 'L';
+    Actions[3] = 'B';
+    Actions[4] = 'W';
+    Param[4] = 2000;
+    Actions[5] = 'A';
+    Param[5] = 3000;
+    Vitesse[5] = 50;
 //    Param[1] = 10;
 //    Vitesse[1] = 100;
   //  Actions[1] = 'L';//Leve le bras
   //  Actions[2] = 'F';//funny action
-    Actions[0] = 'E';// end of the line
+    Actions[6] = 'E';// end of the line
     Serial.println("Blue side !");
   }
   else
   {
-//    Actions[0] = 'A';//Avance
-//    Param[0] = 30; //Distance
-//    Vitesse[0] = 200;
+    Actions[0] = 'R';//Avance
+    Param[0] = 1000; //Distance
+    Vitesse[0] = 60;
 //    Actions[1] = 'A';//Avance
 //    Param[1] = 2;
 //    Vitesse[1] = 100;
   //  Actions[1] = 'L';//Leve le bras
   //  Actions[2] = 'F';//funny action
-    Actions[0] = 'E';// end of the line
+    Actions[1] = 'E';// end of the line
     Serial.println("Yellow side !");
   }
 }
@@ -47,6 +54,9 @@ void MachineEtat()
   {
     case 'A':                         //Avancer
       RouleDroit();
+      break;
+    case 'R':                         //Avancer
+      ReculeDroit();
       break;
     case 'T':
       Tourne();
@@ -74,5 +84,6 @@ void MachineEtat()
     EtatComplete = false;
     Serial.println("Fin de l'état");
     Serial3.print("R\n"); // Reset de la carte codeuse
+    ConsigneVitesse = 0; //Arret du mouvement des moteurs
   }
 }

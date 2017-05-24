@@ -11,8 +11,10 @@ void Tourne();
 void LireCodeuse();
 void splitString(String message, char separator, String *data);
 void PeriodiqueAssert();
+void RaZErreur();
+void ReculeDroit();
 
-  SimpleTimer timer;
+SimpleTimer timer;
 
 
 #endif // ASSERT_H_INCLUDED

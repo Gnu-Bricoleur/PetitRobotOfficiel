@@ -42,9 +42,11 @@ void CheckObstacle()
     Serial.println("Debut detect Avant");
     while(digitalRead(DetectAvant)==HIGH)
     {
-      MoteurGaucheTourne(0);
-      MoteurDroitTourne(0);
+      //MoteurGaucheTourne(0);
+      //MoteurDroitTourne(0);
+      ConsigneVitesse = 0;
     }
+    ConsigneVitesse = Vitesse[EtatCourant];
     Serial.println("Fin detect Avant");
   }
   if (Actions[EtatCourant] == 'R' && digitalRead(DetectArriere)==HIGH)

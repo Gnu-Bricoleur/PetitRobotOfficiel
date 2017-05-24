@@ -22,14 +22,15 @@ void PeriodiqueAssert()
 {
   LireCodeuse();
   //Pour verifier la frequence du pid
-  Serial.print("Freq PID : ");
-  Serial.println(millis() - DateDernierPassage);
-  DateDernierPassage = millis();
+//  Serial.print("Freq PID : ");
+//  Serial.println(millis() - DateDernierPassage);
+//  DateDernierPassage = millis();
 
   //min 40
-  ConsigneVitesse = 50;
+  //ConsigneVitesse = 50;
 
-
+if (Actions[EtatCourant] == 'A' || Actions[EtatCourant] == 'R')
+{
 //##############################################################################
 //###########   ASSERT LINEAIRE   ##############################################
   ErreurDroit = ConsigneVitesse - (CodeuseDroit - AncienneCodeuseDroit); //P
@@ -89,7 +90,38 @@ void PeriodiqueAssert()
   PWMDroit += PWMAngulaire;
   PWMGauche -= PWMAngulaire;
 
-  IndexTableau += 1;
+  IndexTableau += 1;              // Pour les trois PID
+}
+else if (Actions[EtatCourant] = 'T')
+{
+  //############################################################################
+  //##################   ASSERT ANGULAIRE   ####################################
+  PWMDroit = PWMEcrete(PWMDroit);
+  PWMGauche = PWMEcrete(PWMGauche);
+
+
+  ErreurAngulaire = CodeuseDroit - CodeuseGauche;
+  ListeIAngulaire[IndexTableau%NombreValeursI] = ErreurAngulaire;            //I
+  for(int j=0; j<NombreValeursI; j++)
+  {
+    SommeErreurAngulaire += ListeIAngulaire[j%NombreValeursI];
+  }
+  if (SommeErreurAngulaire > MaxI)
+  {
+    SommeErreurAngulaire = MaxI;
+  }
+  DeltaErreurAngulaire = ErreurAngulaire - AncienneErreurAngulaire;
+  PWMAngulaire = PA*ErreurAngulaire + IA*SommeErreurAngulaire + DA*DeltaErreurAngulaire;  //D
+  AncienneErreurAngulaire = ErreurAngulaire;
+
+  PWMDroit += PWMAngulaire;
+  PWMGauche -= PWMAngulaire;
+
+  IndexTableau += 1;              // Pour les trois PID
+}
+
+
+/*  //Pour ggner de la frequence commenter l'asser
 
   Serial.print("EA : ");
   Serial.println(ErreurAngulaire);
@@ -103,91 +135,89 @@ void PeriodiqueAssert()
   Serial.print(ErreurGauche);
   Serial.print(" ; ");
   Serial.println(PWMGauche);
+  */
 
   MoteurDroitTourne(PWMDroit);
   MoteurGaucheTourne(PWMGauche);
+  //Serial.println(PWMAngulaire);
+  //Serial.println(PWMDroit);
+  //Serial.println(PWMGauche);
 
-  //MoteurDroitTourne(100);
-  //MoteurGaucheTourne(150);
+  //Rouler a peu pres droit en boucle ouverte
+  //MoteurDroitTourne(-100);
+  //MoteurGaucheTourne(-150);
 }
+
+void RaZErreur()
+{
+  IndexTableau = 0;
+  ConsigneAngle = 0;
+  ConsigneVitesse = 0;
+  ErreurAngulaire = 0;
+  ErreurDroit = 0;
+  ErreurGauche = 0;
+  for(int j=0; j<NombreValeursI; j++)
+  {
+    ListeIAngulaire[j%NombreValeursI] = 0;
+    ListeIDroit[j%NombreValeursI] = 0;
+    ListeIGauche[j%NombreValeursI] = 0;
+  }
+  DeltaErreurAngulaire = 0;
+  DeltaErreurDroit = 0;
+  DeltaErreurGauche = 0;
+  AncienneErreurDroit = 0;
+  AncienneErreurGauche = 0;
+  AncienneErreurAngulaire = 0;
+}
+
+
+
+void ReculeDroit()
+{
+  LireCodeuse();
+  if (CodeuseDroit >  Param[EtatCourant])// Le robot roule a peut pres droit, CodeuseDroit suffit
+  {
+    RaZErreur();
+    EtatComplete = true;
+  }
+  else
+  {
+    ConsigneVitesse = Vitesse[EtatCourant];
+    ConsigneAngle = 0;
+  }
+}
+
 
 
 
 void RouleDroit()
 {
-/*
   LireCodeuse();
-
-//  Temps = millis();
-//  unsigned long DeltaAssert = Temps - DateAssert;
-//  unsigned long DeltaDroit = CodeuseDroit/DeltaAssert;
-//  unsigned long DeltaGauche = CodeuseGauche/DeltaAssert;
-
-
-  // assert position Moteur droit
-  ErreurDroit = Consigne - CodeuseDroit;
-  SommeErreurDroit += ErreurDroit;
-  DeltaErreurDroit = ErreurDroit - AncienneErreurDroit;
-  PWMDroit = P*ErreurDroit + I*SommeErreurDroit + D*DeltaErreurDroit;
-  AncienneErreurDroit = ErreurDroit;
-
-  //assert position moteur gauche
-  ErreurGauche = Consigne - CodeuseGauche;
-  SommeErreurGauche += ErreurGauche;
-  DeltaErreurGauche = ErreurGauche - AncienneErreurGauche;
-  PWMGauche = P*ErreurGauche + I*SommeErreurGauche + D*DeltaErreurGauche;
-  AncienneErreurGauche = ErreurGauche;
-
-
-  //Ecrete commandes
-  PWMDroit = PWMEcrete(PWMDroit);
-  PWMGauche = PWMEcrete(PWMGauche);
-
-
-
-  // roule droit
-  if (abs(CodeuseDroit - CodeuseGauche) > PrecisionDroit)
+  if (- CodeuseDroit >  Param[EtatCourant])// Le robot roule a peut pres droit, CodeuseDroit suffit
   {
-    if (CodeuseDroit > CodeuseGauche)
-    {
-      PWMDroit -= (PWMDroit/PWMMax)*10; //On ralenti de 10% le moteur en avance
-    }
-    else
-    {
-      PWMGauche -= (PWMGauche/PWMMax)*10;
-    }
-  }
-
-
-
-  // envoie des commandes
-
-
-  MoteurDroitTourne(PWMGauche);
-  MoteurGaucheTourne(PWMDroit);
-
-
-
-  Parcouru = CodeuseDroit; // On ne s'asservi que sur la distance parcouru par la roue droite
-  //Car la roue gauche doit etre pas loing normalement a cause de la condition roule droit
-
-
-
-  if (abs(Consigne - CodeuseDroit) < PrecisionAssert && abs(Consigne - CodeuseGauche) < PrecisionAssert)
-  {
-    Parcouru = 0;
+    RaZErreur();
     EtatComplete = true;
-    MoteurDroitTourne(0);
-    MoteurGaucheTourne(0);
   }
-
-  DateAssert = millis();
-  */
+  else
+  {
+    ConsigneVitesse = Vitesse[EtatCourant];
+    ConsigneAngle = 0;
+  }
 }
 
 void Tourne()
 {
-
+  LireCodeuse();
+  if (- CodeuseDroit >  Param[EtatCourant])// Le robot roule a peut pres droit, CodeuseDroit suffit
+  {
+    RaZErreur();
+    EtatComplete = true;
+  }
+  else
+  {
+    ConsigneAngle = Param[EtatCourant];
+    ConsigneVitesse = 0;
+  }
 }
 
 
