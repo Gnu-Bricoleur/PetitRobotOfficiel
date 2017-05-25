@@ -13,30 +13,43 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
   {
 
     Actions[0] = 'W';
-    Param[0] = 40000;
+    Param[0] = 40000; //ATTENTION REMETRE 40000
 
-    Actions[1] = 'R';//Quart de tour
-    Param[1] = 10000;
+    Actions[1] = 'A';//Avance
+    Param[1] = 3500;
     Vitesse[1] = 60;
+/*
+    Actions[2] = 'W';
+    Param[2] = 3000;
 
-    Actions[2] = 'T';
-    Param[2] = -450;
+    Actions[3] = 'T';
+    Param[3] = 500;
 
-    Actions[3] = 'R';//Quart de tour
-    Param[3] = 1666;
-    Vitesse[3] = 60;
+    Actions[3] = 'W';
+    Param[3] = 10000;
+
+    Actions[4] = 'A';//Avance
+    Param[4] = 5000;
+    Vitesse[4] = 60;
 
     Actions[4] = 'T';
     Param[4] = -450;
 
-    Actions[5] = 'B';
-    Actions[6] = 'L';
+    Actions[5] = 'A';
+    Param[5] = 1666;
+    Vitesse[5] = 60;
+
+    Actions[6] = 'T';
+    Param[6] = -450;
+
     Actions[7] = 'B';
+    Actions[8] = 'L';
+    Actions[9] = 'B';
 
-    Actions[8] = 'A';
-    Param[8] = 3000;
-    Vitesse[8] = 60;
-
+    Actions[10] = 'R';
+    Param[10] = 3000;
+    Vitesse[10] = 60;
+*/
 
   //  Actions[4] = 'W';
   //  Param[4] = 2000;
@@ -47,14 +60,14 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
 //    Vitesse[1] = 100;
   //  Actions[1] = 'L';//Leve le bras
   //  Actions[2] = 'F';//funny action
-    Actions[9] = 'E';// end of the line
+    Actions[2] = 'E';// end of the line
     Serial.println("Blue side !");
   }
   else
   {
     Actions[0] = 'W';
     Param[0] = 40000;
-    Actions[1] = 'R';//Avance
+    Actions[1] = 'A';//Avance
     Param[1] = 4000; //Distance
     Vitesse[1] = 60;// niveau de la bascule
   //  Actions[1] = 'A';//Avance
