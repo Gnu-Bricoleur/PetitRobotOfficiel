@@ -87,14 +87,21 @@ int DeltaErreurAngulaire;
 int AncienneErreurAngulaire;
 int PWMAngulaire;
 
+int CorrectionEnAngle;
+
 //Pour verifier Frequence assert
 unsigned long DateDernierPassage;
+
+
+//POur tester du codeuse
+bool BetaCode;
+
 
 //Pour la machine d'état
 int EtatCourant;
 char Actions[100];
 //A => Avancer; R=> reculer; W => wait; F => funny action; L=> Leve pince : B => baisse pince ; T => tourne
-int Param[100];
+long Param[100];
 int Vitesse[100];
 bool EtatComplete;
 

@@ -11,28 +11,31 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
 {
   if (Bleu == true)
   {
-    // NE PAS OUBLIER D'AVANCER
-    Actions[0] = 'T';//Quart de tour
-    Param[0] = -450;
 
-    Actions[1] = 'A';
-    Param[1] = 1000;
+    Actions[0] = 'W';
+    Param[0] = 40000;
+
+    Actions[1] = 'R';//Quart de tour
+    Param[1] = 10000;
     Vitesse[1] = 60;
 
-    Actions[2] = 'T';//Quart de tour
+    Actions[2] = 'T';
     Param[2] = -450;
 
-    Actions[3] = 'A';
-    Param[3] = 1000;
+    Actions[3] = 'R';//Quart de tour
+    Param[3] = 1666;
     Vitesse[3] = 60;
 
-    Actions[4] = 'B';
-    Actions[5] = 'L';
-    Actions[6] = 'B';
+    Actions[4] = 'T';
+    Param[4] = -450;
 
-    Actions[7] = 'R';
-    Param[7] = 1000;
-    Vitesse[7] = 60;
+    Actions[5] = 'B';
+    Actions[6] = 'L';
+    Actions[7] = 'B';
+
+    Actions[8] = 'A';
+    Param[8] = 3000;
+    Vitesse[8] = 60;
 
 
   //  Actions[4] = 'W';
@@ -44,25 +47,51 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
 //    Vitesse[1] = 100;
   //  Actions[1] = 'L';//Leve le bras
   //  Actions[2] = 'F';//funny action
-    Actions[8] = 'E';// end of the line
+    Actions[9] = 'E';// end of the line
     Serial.println("Blue side !");
   }
   else
   {
-    Actions[0] = 'A';//Avance
-    Param[0] = 4000; //Distance
-    Vitesse[0] = 60;
+    Actions[0] = 'R';//Avance
+    Param[0] = 10000; //Distance
+    Vitesse[0] = 60;// niveau de la bascule
+    Actions[1] = 'A';//Avance
+    Param[1] = 10000; //Distance
+    Vitesse[1] = 60;// niveau de la bascule
+    Actions[2] = 'E';
+
+
+  //  TEST PASSAGE BASCULE
+  /*  Actions[0] = 'R';//Avance
+    Param[0] = 2000; //Distance
+    Vitesse[0] = 60;// niveau de la bascule
 
     Actions[1] = 'W';//Avance
-    Param[1] = 1000;
+    Param[1] = 500;
 
     Actions[2] = 'R';
-    Param[2] = 2000;
+    Param[2] = 700; //Distance
     Vitesse[2] = 60;
 
-    Actions[3] = 'B';
+    Actions[3] = 'W';//Avance
+    Param[3] = 500;
 
-    Actions[4] = 'E';// end of the line
+    Actions[4] = 'B';
+
+    Actions[5] = 'R';
+    Param[5] = 700;
+    Vitesse[5] = 60;
+
+    Actions[6] = 'W';//Avance
+    Param[6] = 700;
+
+    Actions[7] = 'R';
+    Param[7] = 700;
+    Vitesse[7] = 60;
+
+    Actions[8] = 'L';
+
+    Actions[9] = 'E';// end of the line*/
     Serial.println("Yellow side !");
   }
 }
@@ -76,10 +105,10 @@ void MachineEtat()
   switch(Action)
   {
     case 'A':                         //Avancer
-      RouleDroit();
+      RouleDroitBO();
       break;
     case 'R':                         //Avancer
-      ReculeDroit();
+      ReculeDroitBO();
       break;
     case 'T':
       Tourne();

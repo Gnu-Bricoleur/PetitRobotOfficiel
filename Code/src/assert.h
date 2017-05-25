@@ -13,6 +13,9 @@ void splitString(String message, char separator, String *data);
 void PeriodiqueAssert();
 void RaZErreur();
 void ReculeDroit();
+void RouleDroitBO();
+void ReculeDroitBO();
+
 
 SimpleTimer timer;
 

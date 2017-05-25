@@ -9,6 +9,7 @@
 
 void setup()
 {
+  BetaCode = true; //Pour tester les nouvelles fonctions
   //Initialisations des différentes variables
   InitAsssert();
   InitMoteur();

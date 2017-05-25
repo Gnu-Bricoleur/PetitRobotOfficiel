@@ -28,8 +28,8 @@ void PeriodiqueAssert()
 
   //min 40
   //ConsigneVitesse = 50;
-
-if (Actions[EtatCourant] == 'A' /*|| Actions[EtatCourant] == 'R'*/)
+//#Desactive        remplacer Z par A
+if (Actions[EtatCourant] == 'Z' /*|| Actions[EtatCourant] == 'R'*/)
 {
   //##############################################################################
   //###########   ASSERT LINEAIRE   ##############################################
@@ -65,8 +65,8 @@ if (Actions[EtatCourant] == 'A' /*|| Actions[EtatCourant] == 'R'*/)
     AncienneErreurGauche = ErreurGauche;
     AncienneCodeuseGauche = CodeuseGauche;
   }
-
-  if(Actions[EtatCourant] == 'A' /*|| Actions[EtatCourant] == 'R' || Actions[EtatCourant] == 'T'*/)
+  //#Desactive
+  if(Actions[EtatCourant] == 'Z' /*|| Actions[EtatCourant] == 'R' || Actions[EtatCourant] == 'T'*/)
   {
     //############################################################################
     //##################   ASSERT ANGULAIRE   ####################################
@@ -111,7 +111,9 @@ if (Actions[EtatCourant] == 'A' /*|| Actions[EtatCourant] == 'R'*/)
   Serial.print(" ; ");
   Serial.println(PWMGauche);
   */
-  if(Actions[EtatCourant] == 'A' /*|| Actions[EtatCourant] == 'R' || Actions[EtatCourant] == 'T'*/)
+
+  //#Desactive
+  if(Actions[EtatCourant] == 'Z' /*|| Actions[EtatCourant] == 'R' || Actions[EtatCourant] == 'T'*/)
   {
     if (DetectionActive == false)
     {
@@ -156,9 +158,76 @@ void RaZErreur()
 }
 
 
+void ReculeDroitBO()
+{
+  LireCodeuse();
+  if (CodeuseDroit > Param[EtatCourant])
+  {
+    MoteurDroitTourne(0);
+    MoteurGaucheTourne(0);
+    EtatComplete = true;
+  }
+  else
+  {
+    CorrectionEnAngle = CodeuseDroit - CodeuseGauche;
+    CorrectionEnAngle = CorrectionEnAngle*2;
+    MoteurDroitTourne(-100 + CorrectionEnAngle);
+    MoteurGaucheTourne(-135 - CorrectionEnAngle);
+  }
+}
+
+void RouleDroitBO()
+{
+  LireCodeuse();
+  if (-CodeuseDroit > Param[EtatCourant])
+  {
+    MoteurDroitTourne(0);
+    MoteurGaucheTourne(0);
+    EtatComplete = true;
+  }
+  else
+  {
+    CorrectionEnAngle = CodeuseDroit - CodeuseGauche;
+    CorrectionEnAngle = CorrectionEnAngle*2;
+    MoteurDroitTourne(100 + CorrectionEnAngle);
+    MoteurGaucheTourne(135 - CorrectionEnAngle);
+  }
+}
 
 void ReculeDroit()
 {
+  if(BetaCode == false)
+  {
+    LireCodeuse();
+    if (CodeuseDroit > Param[EtatCourant])
+    {
+      MoteurDroitTourne(0);
+      MoteurGaucheTourne(0);
+      EtatComplete = true;
+    }
+    else
+    {
+      MoteurDroitTourne(-100);
+      MoteurGaucheTourne(-135);
+    }
+  }
+  else
+  {
+    LireCodeuse();
+    if (CodeuseDroit > Param[EtatCourant])
+    {
+      MoteurDroitTourne(0);
+      MoteurGaucheTourne(0);
+      EtatComplete = true;
+    }
+    else
+    {
+      CorrectionEnAngle = CodeuseDroit - CodeuseGauche;
+      CorrectionEnAngle = CorrectionEnAngle*2;
+      MoteurDroitTourne(-100 + CorrectionEnAngle);
+      MoteurGaucheTourne(-135 - CorrectionEnAngle);
+    }
+  }
   /*
   LireCodeuse();
   if (CodeuseDroit >  Param[EtatCourant])// Le robot roule a peut pres droit, CodeuseDroit suffit
@@ -172,18 +241,6 @@ void ReculeDroit()
     ConsigneAngle = 0;
   }
   */
-  LireCodeuse();
-  if (CodeuseDroit > Param[EtatCourant])
-  {
-    MoteurDroitTourne(0);
-    MoteurGaucheTourne(0);
-    EtatComplete = true;
-  }
-  else
-  {
-    MoteurDroitTourne(-100);
-    MoteurGaucheTourne(-170);
-  }
 }
 
 
