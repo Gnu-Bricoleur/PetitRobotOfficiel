@@ -13,18 +13,18 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
   {
 
     Actions[0] = 'W';
-    Param[0] = 40000; //ATTENTION REMETRE 40000
+    Param[0] = 4000; //ATTENTION REMETRE 40000
 
     Actions[1] = 'A';//Avance
-    Param[1] = 3500;
+    Param[1] = 5000;
     Vitesse[1] = 60;
-/*
+
     Actions[2] = 'W';
     Param[2] = 3000;
 
     Actions[3] = 'T';
     Param[3] = 500;
-
+/*
     Actions[3] = 'W';
     Param[3] = 10000;
 
@@ -60,7 +60,7 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
 //    Vitesse[1] = 100;
   //  Actions[1] = 'L';//Leve le bras
   //  Actions[2] = 'F';//funny action
-    Actions[2] = 'E';// end of the line
+    Actions[4] = 'E';// end of the line
     Serial.println("Blue side !");
   }
   else
@@ -152,6 +152,11 @@ void MachineEtat()
     EtatComplete = false;
     Serial.println("Fin de l'état");
     Serial3.print("R\n"); // Reset de la carte codeuse
+    delayMicroseconds(10);
+    LireCodeuse();
+    Serial.print(CodeuseDroit);
+    Serial.print(CodeuseGauche);
+    Serial.println("  odsjfdlsng");
     ConsigneVitesse = 0; //Arret du mouvement des moteurs
   }
 }

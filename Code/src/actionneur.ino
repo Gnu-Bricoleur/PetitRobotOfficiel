@@ -14,7 +14,7 @@ void InitActionneurs()
 void LassoHaut()
 {
   Serial.println("LassoHaut");
-  Lasso.write(130);
+  Lasso.write(140);
   EtatComplete = true;
   delay(500);
 

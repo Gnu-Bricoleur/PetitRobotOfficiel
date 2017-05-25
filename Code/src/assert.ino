@@ -282,8 +282,11 @@ void Tourne()
   LireCodeuse();
   if (Param[EtatCourant] > 0)
   {
+    Serial.println(-CodeuseDroit);
+    Serial.println(Param[EtatCourant]);
     if (-CodeuseDroit > Param[EtatCourant])
     {
+      Serial.println(CodeuseDroit);
       MoteurDroitTourne(0);
       MoteurGaucheTourne(0);
       EtatComplete = true;
