@@ -25,6 +25,7 @@ void LassoBas()
   Serial.println("LassoBas");
   Lasso.write(0);
   EtatComplete = true;
+    delay(500);
 }
 
 

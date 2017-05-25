@@ -88,5 +88,4 @@ void Attente()
     DebutAttente = false;
     EtatComplete = true;
   }
-  Serial.println(millis() - TempsDebutAttente);
 }

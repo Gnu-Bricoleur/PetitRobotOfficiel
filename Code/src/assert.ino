@@ -29,7 +29,7 @@ void PeriodiqueAssert()
   //min 40
   //ConsigneVitesse = 50;
 
-if (Actions[EtatCourant] == 'A' || Actions[EtatCourant] == 'R')
+if (Actions[EtatCourant] == 'A' /*|| Actions[EtatCourant] == 'R'*/)
 {
   //##############################################################################
   //###########   ASSERT LINEAIRE   ##############################################
@@ -66,7 +66,7 @@ if (Actions[EtatCourant] == 'A' || Actions[EtatCourant] == 'R')
     AncienneCodeuseGauche = CodeuseGauche;
   }
 
-  if(Actions[EtatCourant] == 'A' || Actions[EtatCourant] == 'R' || Actions[EtatCourant] == 'T')
+  if(Actions[EtatCourant] == 'A' /*|| Actions[EtatCourant] == 'R' || Actions[EtatCourant] == 'T'*/)
   {
     //############################################################################
     //##################   ASSERT ANGULAIRE   ####################################
@@ -111,7 +111,7 @@ if (Actions[EtatCourant] == 'A' || Actions[EtatCourant] == 'R')
   Serial.print(" ; ");
   Serial.println(PWMGauche);
   */
-  if(Actions[EtatCourant] == 'A' || Actions[EtatCourant] == 'R' || Actions[EtatCourant] == 'T')
+  if(Actions[EtatCourant] == 'A' /*|| Actions[EtatCourant] == 'R' || Actions[EtatCourant] == 'T'*/)
   {
     if (DetectionActive == false)
     {
@@ -182,7 +182,7 @@ void ReculeDroit()
   else
   {
     MoteurDroitTourne(-100);
-    MoteurGaucheTourne(-150);
+    MoteurGaucheTourne(-170);
   }
 }
 
@@ -239,7 +239,8 @@ void Tourne()
   }
   else
   {
-    if (CodeuseDroit > Param[EtatCourant])
+    Serial.println(CodeuseDroit);
+    if (-CodeuseDroit < Param[EtatCourant])
     {
       MoteurDroitTourne(0);
       MoteurGaucheTourne(0);
@@ -247,8 +248,8 @@ void Tourne()
     }
     else
     {
-      MoteurDroitTourne(100);
-      MoteurGaucheTourne(-150);
+      MoteurDroitTourne(-100);
+      MoteurGaucheTourne(150);
     }
   }
 }

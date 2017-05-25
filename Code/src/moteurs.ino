@@ -12,6 +12,20 @@ void InitMoteur()
   pinMode(In4MoteurGauche, OUTPUT);
 }
 
+void TestMoteurs()
+{
+  MoteurDroitTourne(200);
+  MoteurGaucheTourne(200);
+  delay(150);
+  MoteurDroitTourne(-200);
+  MoteurGaucheTourne(-200);
+  delay(150);
+  MoteurDroitTourne(0);
+  MoteurGaucheTourne(0);
+  delay(500);
+}
+
+
 int PWMEcrete(int PWM)
 {
   if (PWM > PWMMax)

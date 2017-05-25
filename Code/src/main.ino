@@ -15,6 +15,7 @@ void setup()
   InitActionneurs();
   InitMachineEtat();
   InitOrphelins();
+  //TestMoteurs();
   //Le robot peut demarrer
   Serial.begin(115200);
   Serial.println("Fin des initialisations !");

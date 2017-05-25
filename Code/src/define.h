@@ -31,16 +31,16 @@
 //definition des variables globales
 //Pour l'assert en vitesse
 #define PD 1.2 //:-)
-#define ID 0.0001 //;-)
+#define ID 0.001 //;-)
 #define DD 0.5  //;-))
 
 #define PG 1.5
-#define IG 0.0001
+#define IG 0.001
 #define DG 0.5
 
-#define PA 0.001
-#define IA 0
-#define DA 0
+#define PA 0.01
+#define IA 0.001
+#define DA 0.005
 
 #define Separateur ';'
 
