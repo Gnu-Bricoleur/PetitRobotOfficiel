@@ -6,6 +6,7 @@ void InitOrphelins()
     Tirette = true;
     DebutAttente = false;
     TempsDebutAttente = 0;
+    DetectionActive = false;
 }
 
 
@@ -47,19 +48,26 @@ void CheckObstacle()
       //MoteurGaucheTourne(0);
       //MoteurDroitTourne(0);
       ConsigneVitesse = 0;
+      ConsigneAngle = 0;
+      StopMoteur();
+      DetectionActive = true;
     }
     ConsigneVitesse = Vitesse[EtatCourant];
     Serial.println("Fin detect Avant");
+    DetectionActive = false;
   }
   if (Actions[EtatCourant] == 'R' && digitalRead(DetectArriere)==HIGH)
   {
-    Serial.println("Debut detect Avant");
+    Serial.println("Debut detect Arriere");
     while (digitalRead(DetectArriere)==HIGH)
     {
-      MoteurGaucheTourne(0);
-      MoteurDroitTourne(0);
+      ConsigneAngle = 0;
+      ConsigneVitesse = 0;
+      StopMoteur();
+      DetectionActive = true;
     }
         Serial.println("Fin detect Arriere");
+        DetectionActive = false;
   }
 }
 

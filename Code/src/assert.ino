@@ -88,8 +88,8 @@ if (Actions[EtatCourant] == 'A' || Actions[EtatCourant] == 'R')
     PWMAngulaire = PA*ErreurAngulaire + IA*SommeErreurAngulaire + DA*DeltaErreurAngulaire;  //D
     AncienneErreurAngulaire = ErreurAngulaire;
 
-    PWMDroit += PWMAngulaire;
-    PWMGauche -= PWMAngulaire;
+    PWMDroit -= PWMAngulaire;
+    PWMGauche += PWMAngulaire;
   }
   IndexTableau += 1;              // Pour les trois PID
 
@@ -113,8 +113,11 @@ if (Actions[EtatCourant] == 'A' || Actions[EtatCourant] == 'R')
   */
   if(Actions[EtatCourant] == 'A' || Actions[EtatCourant] == 'R' || Actions[EtatCourant] == 'T')
   {
-    MoteurDroitTourne(PWMDroit);
-    MoteurGaucheTourne(PWMGauche);
+    if (DetectionActive == false)
+    {
+      MoteurDroitTourne(PWMDroit);
+      MoteurGaucheTourne(PWMGauche);
+    }
   }
   else
   {
@@ -156,6 +159,7 @@ void RaZErreur()
 
 void ReculeDroit()
 {
+  /*
   LireCodeuse();
   if (CodeuseDroit >  Param[EtatCourant])// Le robot roule a peut pres droit, CodeuseDroit suffit
   {
@@ -166,6 +170,19 @@ void ReculeDroit()
   {
     ConsigneVitesse = Vitesse[EtatCourant];
     ConsigneAngle = 0;
+  }
+  */
+  LireCodeuse();
+  if (CodeuseDroit > Param[EtatCourant])
+  {
+    MoteurDroitTourne(0);
+    MoteurGaucheTourne(0);
+    EtatComplete = true;
+  }
+  else
+  {
+    MoteurDroitTourne(-100);
+    MoteurGaucheTourne(-150);
   }
 }
 
@@ -180,6 +197,7 @@ void RouleDroit()
     RaZErreur();
     Serial.println("Fin roule droit");
     EtatComplete = true;
+    StopMoteur();
   }
   else
   {
@@ -191,6 +209,7 @@ void RouleDroit()
 
 void Tourne()
 {
+  /*
   LireCodeuse();
   if (- CodeuseDroit >  Param[EtatCourant])// Le robot roule a peut pres droit, CodeuseDroit suffit
   {
@@ -201,6 +220,36 @@ void Tourne()
   {
     ConsigneAngle = Param[EtatCourant];
     ConsigneVitesse = 0;
+  }
+  */
+  LireCodeuse();
+  if (Param[EtatCourant] > 0)
+  {
+    if (-CodeuseDroit > Param[EtatCourant])
+    {
+      MoteurDroitTourne(0);
+      MoteurGaucheTourne(0);
+      EtatComplete = true;
+    }
+    else
+    {
+      MoteurDroitTourne(100);
+      MoteurGaucheTourne(-150);
+    }
+  }
+  else
+  {
+    if (CodeuseDroit > Param[EtatCourant])
+    {
+      MoteurDroitTourne(0);
+      MoteurGaucheTourne(0);
+      EtatComplete = true;
+    }
+    else
+    {
+      MoteurDroitTourne(100);
+      MoteurGaucheTourne(-150);
+    }
   }
 }
 

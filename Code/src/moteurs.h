@@ -8,5 +8,6 @@ int PWMEcrete(int PWM);
 void MoteurDroitTourne(int PWM);
 void InitMoteur();
 void MoteurGaucheTourne(int PWM);
+void StopMoteur();
 
 #endif // MOTEUR_H_INCLUDED

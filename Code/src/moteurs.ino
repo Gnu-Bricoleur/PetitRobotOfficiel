@@ -63,7 +63,15 @@ void MoteurGaucheTourne(int PWM)
   PWM = abs(PWM);
   PWM = PWMEcrete(PWM);
   analogWrite(MoteurGauche, PWM);
+}
 
 
-
+void StopMoteur()
+{
+  analogWrite(MoteurGauche, 0);
+  analogWrite(MoteurDroit, 0);
+  digitalWrite(In1MoteurDroit, LOW);
+  digitalWrite(In2MoteurDroit, LOW);
+  digitalWrite(In3MoteurGauche, LOW);
+  digitalWrite(In4MoteurGauche, LOW);
 }

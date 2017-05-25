@@ -33,12 +33,12 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
   else
   {
     Actions[0] = 'A';//Avance
-    Param[0] = 2000; //Distance
+    Param[0] = 6000; //Distance
     Vitesse[0] = 60;
     Actions[1] = 'W';//Avance
-    Param[1] = 2000;
-    Actions[2] = 'A';
-    Param[2] = 2000;
+    Param[1] = 1000;
+    Actions[2] = 'T';
+    Param[2] = -2000;
     Vitesse[2] = 60;
     Actions[3] = 'B';//funny action
     Actions[4] = 'E';// end of the line

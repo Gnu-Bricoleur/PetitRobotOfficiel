@@ -38,7 +38,7 @@
 #define IG 0.0001
 #define DG 0.5
 
-#define PA 0.1
+#define PA 0.001
 #define IA 0
 #define DA 0
 
@@ -49,6 +49,7 @@
 int ListeIDroit[NombreValeursI];
 int ListeIGauche[NombreValeursI];
 
+#define CoefMagique 1.5
 
 int ConsigneAngle;
 int TimerId;
@@ -108,6 +109,10 @@ bool EtatComplete;
 bool DebutAttente;
 unsigned long TempsDebutAttente;
 
+
+
+// pour la DetectionActive
+bool DetectionActive;
 
 
 
