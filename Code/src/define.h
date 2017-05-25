@@ -96,6 +96,9 @@ unsigned long DateDernierPassage;
 //POur tester du codeuse
 bool BetaCode;
 
+// Pour Activer la DetectionActive
+bool PriseEnCompteDetection;
+
 
 //Pour la machine d'état
 int EtatCourant;

@@ -52,13 +52,16 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
   }
   else
   {
-    Actions[0] = 'R';//Avance
-    Param[0] = 10000; //Distance
-    Vitesse[0] = 60;// niveau de la bascule
-    Actions[1] = 'A';//Avance
-    Param[1] = 10000; //Distance
+    Actions[0] = 'W';
+    Param[0] = 40000;
+    Actions[1] = 'R';//Avance
+    Param[1] = 4000; //Distance
     Vitesse[1] = 60;// niveau de la bascule
-    Actions[2] = 'E';
+  //  Actions[1] = 'A';//Avance
+  //  Param[1] = 10000; //Distance
+  //  Vitesse[1] = 60;// niveau de la bascule
+    Actions[2] = 'B';
+    Actions[3] = 'E';
 
 
   //  TEST PASSAGE BASCULE

@@ -7,6 +7,7 @@ void InitOrphelins()
     DebutAttente = false;
     TempsDebutAttente = 0;
     DetectionActive = false;
+    PriseEnCompteDetection = false;
 }
 
 
@@ -40,34 +41,37 @@ void CheckTirette()
 
 void CheckObstacle()
 {
-  if (Actions[EtatCourant] == 'A' && digitalRead(DetectAvant)==HIGH)
+  if (PriseEnCompteDetection == true)
   {
-    Serial.println("Debut detect Avant");
-    while(digitalRead(DetectAvant)==HIGH)
+    if (Actions[EtatCourant] == 'A' && digitalRead(DetectAvant)==HIGH)
     {
-      //MoteurGaucheTourne(0);
-      //MoteurDroitTourne(0);
-      ConsigneVitesse = 0;
-      ConsigneAngle = 0;
-      StopMoteur();
-      DetectionActive = true;
+      Serial.println("Debut detect Avant");
+      while(digitalRead(DetectAvant)==HIGH)
+      {
+        //MoteurGaucheTourne(0);
+        //MoteurDroitTourne(0);
+        ConsigneVitesse = 0;
+        ConsigneAngle = 0;
+        StopMoteur();
+        DetectionActive = true;
+      }
+      ConsigneVitesse = Vitesse[EtatCourant];
+      Serial.println("Fin detect Avant");
+      DetectionActive = false;
     }
-    ConsigneVitesse = Vitesse[EtatCourant];
-    Serial.println("Fin detect Avant");
-    DetectionActive = false;
-  }
-  if (Actions[EtatCourant] == 'R' && digitalRead(DetectArriere)==HIGH)
-  {
-    Serial.println("Debut detect Arriere");
-    while (digitalRead(DetectArriere)==HIGH)
+    if (Actions[EtatCourant] == 'R' && digitalRead(DetectArriere)==HIGH)
     {
-      ConsigneAngle = 0;
-      ConsigneVitesse = 0;
-      StopMoteur();
-      DetectionActive = true;
+      Serial.println("Debut detect Arriere");
+      while (digitalRead(DetectArriere)==HIGH)
+      {
+        ConsigneAngle = 0;
+        ConsigneVitesse = 0;
+        StopMoteur();
+        DetectionActive = true;
+      }
+          Serial.println("Fin detect Arriere");
+          DetectionActive = false;
     }
-        Serial.println("Fin detect Arriere");
-        DetectionActive = false;
   }
 }
 
