@@ -23,7 +23,7 @@ void LassoHaut()
 void LassoBas()
 {
   Serial.println("LassoBas");
-  Lasso.write(90);
+  Lasso.write(75);
   EtatComplete = true;
     delay(500);
 }

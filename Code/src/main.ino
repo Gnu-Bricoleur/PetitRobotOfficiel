@@ -35,9 +35,10 @@ void loop()
   CheckObstacle();
 
   //Check temps ecoule
-  if (millis() - TempsDebut > 91000)
+  if (millis() - TempsDebut > 85000)
   {
-    timer.disable(TimerId);
+    LassoHaut();
+    delay(6000);
     JoueFunnyAction();
     while(true)
     {
