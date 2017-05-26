@@ -42,7 +42,6 @@ void loop()
     while(true)
     {
       // Fin du match, boucle infinie
-      RaZErreur();
       StopMoteur();
     }
   }

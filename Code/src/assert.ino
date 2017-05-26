@@ -13,150 +13,8 @@ void InitAsssert()
   Serial3.print("R\n"); // Reset de la carte codeuse
   FinDroit = false;
   FinGauche = false;
-  TimerId = timer.setInterval(1000/FrequenceEchantillonnage, PeriodiqueAssert);
   IndexTableau = 0;
 }
-
-
-void PeriodiqueAssert()
-{
-  LireCodeuse();
-  //Pour verifier la frequence du pid
-//  Serial.print("Freq PID : ");
-//  Serial.println(millis() - DateDernierPassage);
-//  DateDernierPassage = millis();
-
-  //min 40
-  //ConsigneVitesse = 50;
-//#Desactive        remplacer Z par A
-if (Actions[EtatCourant] == 'Z' /*|| Actions[EtatCourant] == 'R'*/)
-{
-  //##############################################################################
-  //###########   ASSERT LINEAIRE   ##############################################
-    ErreurDroit = ConsigneVitesse - (CodeuseDroit - AncienneCodeuseDroit); //P
-    ListeIDroit[IndexTableau%NombreValeursI] = ErreurDroit;                //I
-    for(int j=0; j<NombreValeursI; j++)
-    {
-      SommeErreurDroit += ListeIDroit[j%NombreValeursI];
-    }
-    if (SommeErreurDroit > MaxI)
-    {
-      SommeErreurDroit = MaxI;
-    }
-    DeltaErreurDroit = ErreurDroit - AncienneErreurDroit;                   //D
-    PWMDroit = PD*ErreurDroit + ID*SommeErreurDroit + DD*DeltaErreurDroit;
-    AncienneErreurDroit = ErreurDroit;
-    AncienneCodeuseDroit = CodeuseDroit;
-
-
-
-    ErreurGauche = ConsigneVitesse - (CodeuseGauche - AncienneCodeuseGauche);//P
-    ListeIGauche[IndexTableau%NombreValeursI] = ErreurGauche;                //I
-    for(int j=0; j<NombreValeursI; j++)
-    {
-      SommeErreurGauche += ListeIGauche[j%NombreValeursI];
-    }
-    if (SommeErreurGauche > MaxI)
-    {
-      SommeErreurGauche = MaxI;
-    }
-    DeltaErreurGauche = ErreurGauche - AncienneErreurGauche;
-    PWMGauche = PG*ErreurGauche + IG*SommeErreurGauche + DG*DeltaErreurGauche;  //D
-    AncienneErreurGauche = ErreurGauche;
-    AncienneCodeuseGauche = CodeuseGauche;
-  }
-  //#Desactive
-  if(Actions[EtatCourant] == 'Z' /*|| Actions[EtatCourant] == 'R' || Actions[EtatCourant] == 'T'*/)
-  {
-    //############################################################################
-    //##################   ASSERT ANGULAIRE   ####################################
-    PWMDroit = PWMEcrete(PWMDroit);
-    PWMGauche = PWMEcrete(PWMGauche);
-
-
-    ErreurAngulaire = CodeuseDroit - CodeuseGauche;                            //P
-    ListeIAngulaire[IndexTableau%NombreValeursI] = ErreurAngulaire;            //I
-    for(int j=0; j<NombreValeursI; j++)
-    {
-      SommeErreurAngulaire += ListeIAngulaire[j%NombreValeursI];
-    }
-    if (SommeErreurAngulaire > MaxI)
-    {
-      SommeErreurAngulaire = MaxI;
-    }
-    DeltaErreurAngulaire = ErreurAngulaire - AncienneErreurAngulaire;
-    PWMAngulaire = PA*ErreurAngulaire + IA*SommeErreurAngulaire + DA*DeltaErreurAngulaire;  //D
-    AncienneErreurAngulaire = ErreurAngulaire;
-
-    PWMDroit -= PWMAngulaire;
-    PWMGauche += PWMAngulaire;
-  }
-  IndexTableau += 1;              // Pour les trois PID
-
-
-
-
-/*  //Pour ggner de la frequence commenter l'asser
-
-  Serial.print("EA : ");
-  Serial.println(ErreurAngulaire);
-
-  Serial.print("D : ");
-  Serial.print(ErreurDroit);
-  Serial.print(" ; ");
-  Serial.println(PWMDroit);
-
-  Serial.print("G : ");
-  Serial.print(ErreurGauche);
-  Serial.print(" ; ");
-  Serial.println(PWMGauche);
-  */
-
-  //#Desactive
-  if(Actions[EtatCourant] == 'Z' /*|| Actions[EtatCourant] == 'R' || Actions[EtatCourant] == 'T'*/)
-  {
-    if (DetectionActive == false)
-    {
-      MoteurDroitTourne(PWMDroit);
-      MoteurGaucheTourne(PWMGauche);
-    }
-  }
-  else
-  {
-    MoteurDroitTourne(0);
-    MoteurGaucheTourne(0);
-  }
-  //Serial.println(PWMAngulaire);
-  //Serial.println(PWMDroit);
-  //Serial.println(PWMGauche);
-
-  //Rouler a peu pres droit en boucle ouverte
-  //MoteurDroitTourne(-100);
-  //MoteurGaucheTourne(-150);
-}
-
-void RaZErreur()
-{
-  IndexTableau = 0;
-  ConsigneAngle = 0;
-  ConsigneVitesse = 0;
-  ErreurAngulaire = 0;
-  ErreurDroit = 0;
-  ErreurGauche = 0;
-  for(int j=0; j<NombreValeursI; j++)
-  {
-    ListeIAngulaire[j%NombreValeursI] = 0;
-    ListeIDroit[j%NombreValeursI] = 0;
-    ListeIGauche[j%NombreValeursI] = 0;
-  }
-  DeltaErreurAngulaire = 0;
-  DeltaErreurDroit = 0;
-  DeltaErreurGauche = 0;
-  AncienneErreurDroit = 0;
-  AncienneErreurGauche = 0;
-  AncienneErreurAngulaire = 0;
-}
-
 
 void ReculeDroitBO()
 {
@@ -193,76 +51,6 @@ void RouleDroitBO()
     MoteurGaucheTourne(135 - CorrectionEnAngle);
   }
 }
-
-void ReculeDroit()
-{
-  if(BetaCode == false)
-  {
-    LireCodeuse();
-    if (CodeuseDroit > Param[EtatCourant])
-    {
-      MoteurDroitTourne(0);
-      MoteurGaucheTourne(0);
-      EtatComplete = true;
-    }
-    else
-    {
-      MoteurDroitTourne(-100);
-      MoteurGaucheTourne(-135);
-    }
-  }
-  else
-  {
-    LireCodeuse();
-    if (CodeuseDroit > Param[EtatCourant])
-    {
-      MoteurDroitTourne(0);
-      MoteurGaucheTourne(0);
-      EtatComplete = true;
-    }
-    else
-    {
-      CorrectionEnAngle = CodeuseDroit - CodeuseGauche;
-      CorrectionEnAngle = CorrectionEnAngle*2;
-      MoteurDroitTourne(-100 + CorrectionEnAngle);
-      MoteurGaucheTourne(-135 - CorrectionEnAngle);
-    }
-  }
-  /*
-  LireCodeuse();
-  if (CodeuseDroit >  Param[EtatCourant])// Le robot roule a peut pres droit, CodeuseDroit suffit
-  {
-    RaZErreur();
-    EtatComplete = true;
-  }
-  else
-  {
-    ConsigneVitesse = Vitesse[EtatCourant];
-    ConsigneAngle = 0;
-  }
-  */
-}
-
-
-
-
-void RouleDroit()
-{
-  LireCodeuse();
-  if (- CodeuseDroit >  Param[EtatCourant])// Le robot roule a peut pres droit, CodeuseDroit suffit
-  {
-    RaZErreur();
-    Serial.println("Fin roule droit");
-    EtatComplete = true;
-    StopMoteur();
-  }
-  else
-  {
-    ConsigneVitesse = Vitesse[EtatCourant];
-    ConsigneAngle = 0;
-  }
-}
-
 
 void Tourne()
 {
@@ -369,6 +157,7 @@ void splitString(String message, char separator, String *data) {
     }
   } while (index >= 0); // tant qu'il y a bien un séparateur dans la chaine
 }
+
 /*
 void mise_a_jour_POS()
 {

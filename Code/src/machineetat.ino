@@ -13,17 +13,22 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
   {
 
     Actions[0] = 'W';
-    Param[0] = 4000; //ATTENTION REMETRE 40000
+    Param[0] = 4000; //ATTENTION REMETRE 40000 !!!!!!!!!!!!!!!!!!!
 
-    Actions[1] = 'A';//Avance
+    Actions[1] = 'A';//Avance pour passer la bascule
     Param[1] = 5000;
     Vitesse[1] = 60;
 
-    Actions[2] = 'W';
-    Param[2] = 3000;
+    Actions[2] = 'W';//stabilisation
+    Param[2] = 500;
 
-    Actions[3] = 'T';
-    Param[3] = 500;
+    Actions[3] = 'T';//remise dans l'axe
+    Param[3] = -25;
+
+    Actions[4] = 'W';//stabilisation
+    Param[4] = 500;
+
+
 /*
     Actions[3] = 'W';
     Param[3] = 10000;
@@ -66,48 +71,46 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
   else
   {
     Actions[0] = 'W';
-    Param[0] = 40000;
-    Actions[1] = 'A';//Avance
-    Param[1] = 4000; //Distance
-    Vitesse[1] = 60;// niveau de la bascule
-  //  Actions[1] = 'A';//Avance
-  //  Param[1] = 10000; //Distance
-  //  Vitesse[1] = 60;// niveau de la bascule
-    Actions[2] = 'B';
-    Actions[3] = 'E';
+    Param[0] = 4000; //ATTENTION REMETRE 40000 !!!!!!!!!!!!!!!!!!!
 
+    Actions[1] = 'A';//Avance pour passer la bascule
+    Param[1] = 6500;
+    Vitesse[1] = 60;
 
-  //  TEST PASSAGE BASCULE
-  /*  Actions[0] = 'R';//Avance
-    Param[0] = 2000; //Distance
-    Vitesse[0] = 60;// niveau de la bascule
+    Actions[2] = 'W';//stabilisation
+    Param[2] = 500;
 
-    Actions[1] = 'W';//Avance
-    Param[1] = 500;
+    Actions[3] = 'T';//remise dans l'axe
+    Param[3] = -25;
 
-    Actions[2] = 'R';
-    Param[2] = 700; //Distance
-    Vitesse[2] = 60;
+    Actions[4] = 'W';//stabilisation
+    Param[4] = 1000;
 
-    Actions[3] = 'W';//Avance
-    Param[3] = 500;
+    Actions[5] = 'T';//premier virage
+    Param[5] = 450;
 
-    Actions[4] = 'B';
-
-    Actions[5] = 'R';
-    Param[5] = 700;
-    Vitesse[5] = 60;
-
-    Actions[6] = 'W';//Avance
-    Param[6] = 700;
+    Actions[6] = 'W';//stabilisation
+    Param[6] = 500;
 
     Actions[7] = 'R';
-    Param[7] = 700;
+    Param[7] = 2700;
     Vitesse[7] = 60;
 
-    Actions[8] = 'L';
+    Actions[8] = 'W';//stabilisation
+    Param[8] = 500;
 
-    Actions[9] = 'E';// end of the line*/
+    Actions[9] = 'T';//deuxieme virage
+    Param[9] = -430;
+
+    Actions[10] = 'W';//stabilisation
+    Param[10] = 500;
+
+    Actions[11] = 'R';
+    Param[11] = 400;
+
+    Actions[12] = 'B';
+
+    Actions[13] = 'E';// end of the line*/
     Serial.println("Yellow side !");
   }
 }
