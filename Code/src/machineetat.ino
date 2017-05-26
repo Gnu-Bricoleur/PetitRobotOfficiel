@@ -33,13 +33,13 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
     Param[4] = 1000;
 
     Actions[5] = 'T';//premier virage
-    Param[5] = -450;
+    Param[5] = -435;
 
     Actions[6] = 'W';//stabilisation
     Param[6] = 700;
 
     Actions[7] = 'R';//Sortie de la zone gros robot
-    Param[7] = 2700;
+    Param[7] = 2500;
     Vitesse[7] = 60;
 
     Actions[8] = 'W';//stabilisation
@@ -72,16 +72,16 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
     Actions[17] = 'B';
 
     Actions[18] = 'T';//tortille pour attraper les balles
-    Param[18] = -150;
+    Param[18] = -70;
 
     Actions[19] = 'T';//tortille pour attraper les balles
-    Param[19] = 300;
+    Param[19] = 140;
 
     Actions[20] = 'T';//tortille pour attraper les balles
-    Param[20] = -300;
+    Param[20] = -140;
 
     Actions[21] = 'T';//tortille pour attraper les balles
-    Param[21] = 150;
+    Param[21] = 70;
 
     Actions[22] = 'B';
 
@@ -101,14 +101,14 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
     Actions[27] = 'W';//stabilisation
     Param[27] = 700;
 
-    Actions[28] = 'T';//deuxieme virage
-    Param[28] = 380;
+    Actions[28] = 'T';// virage
+    Param[28] = 330;
 
     Actions[29] = 'W';//stabilisation
     Param[29] = 700;
 
     Actions[30] = 'R';//Avance avec les balles
-    Param[30] = 1000;
+    Param[30] = 1500;
     Vitesse[30] = 60;
 
     Actions[31] = 'W';//stabilisation
@@ -117,11 +117,7 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
     Actions[32] = 'T';//remise dans l'axe
     Param[32] = 25;
 
-    Actions[33] = 'R';
-    Param[33] = 300;
-
-
-    Actions[34] = 'E';// end of the line*/
+    Actions[33] = 'E';// end of the line*/
 /* Strat minimale
     Actions[0] = 'W';
     Param[0] = 4000; //ATTENTION REMETRE 40000 !!!!!!!!!!!!!!!!!!!
