@@ -90,7 +90,7 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
     Param[10] = 700;
 
     Actions[11] = 'T';//deuxieme virage
-    Param[11] = 450;
+    Param[11] = 430;
 
     Actions[12] = 'W';//stabilisation
     Param[12] = 700;
@@ -187,7 +187,7 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
     Param[0] = 35000; //ATTENTION REMETRE 40000 !!!!!!!!!!!!!!!!!!!
 
     Actions[1] = 'A';//Avance pour passer la bascule
-    Param[1] = 7000;
+    Param[1] = 6500;
     Vitesse[1] = 60;
 
     Actions[2] = 'W';//stabilisation
@@ -225,7 +225,7 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
     Param[12] = 700;
 
     Actions[13] = 'R';//Direction le tas de minerais
-    Param[13] = 580;
+    Param[13] = 680;
 
     Actions[14] = 'W';//stabilisation
     Param[14] = 700;
