@@ -15,7 +15,7 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
 {
   if (Bleu == true)
   {
-    /*
+    /*    TEST ATTAPE BALLES
     Actions[0] = 'R';//Direction le tas de minerais
     Param[0] = 500;
 
@@ -55,7 +55,7 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
     */
 
     Actions[0] = 'W';
-    Param[0] = 35000; //ATTENTION REMETRE 40000 !!!!!!!!!!!!!!!!!!!
+    Param[0] = 35000; //ATTENTION REMETRE 35000 !!!!!!!!!!!!!!!!!!!
 
     Actions[1] = 'A';//Avance pour passer la bascule
     Param[1] = 6500;
@@ -152,7 +152,7 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
     Param[31] = 700;
 
     Actions[32] = 'R';//Avance avec les balles
-    Param[32] = 2000;
+    Param[32] = 3000;
     Vitesse[32] = 60;
 
     Actions[33] = 'W';//stabilisation
@@ -187,7 +187,7 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
     Param[0] = 35000; //ATTENTION REMETRE 40000 !!!!!!!!!!!!!!!!!!!
 
     Actions[1] = 'A';//Avance pour passer la bascule
-    Param[1] = 6500;
+    Param[1] = 7000;
     Vitesse[1] = 60;
 
     Actions[2] = 'W';//stabilisation
@@ -219,13 +219,13 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
     Param[10] = 700;
 
     Actions[11] = 'T';//deuxieme virage
-    Param[11] = -450;
+    Param[11] = -420;
 
     Actions[12] = 'W';//stabilisation
     Param[12] = 700;
 
     Actions[13] = 'R';//Direction le tas de minerais
-    Param[13] = 480;
+    Param[13] = 580;
 
     Actions[14] = 'W';//stabilisation
     Param[14] = 700;
@@ -244,50 +244,50 @@ void InitActions()      // Vitesse min 40 !!!!!!!!!!!!!!!!!!!!!!
     Actions[19] = 'A';//tortille pour attraper les balles
     Param[19] = 60;
 
-    Actions[18] = 'T';//tortille pour attraper les balles
-    Param[18] = -30;
-
-    Actions[19] = 'T';//tortille pour attraper les balles
-    Param[19] = 60;
-
     Actions[20] = 'T';//tortille pour attraper les balles
-    Param[20] = -60;
+    Param[20] = -30;
 
     Actions[21] = 'T';//tortille pour attraper les balles
-    Param[21] = 30;
+    Param[21] = 60;
 
-    Actions[22] = 'B';
+    Actions[22] = 'T';//tortille pour attraper les balles
+    Param[22] = -60;
 
-    Actions[23] = 'W';//stabilisation
-    Param[23] = 700;
+    Actions[23] = 'T';//tortille pour attraper les balles
+    Param[23] = 30;
 
-    Actions[24] = 'A';//Avance avec les balles
-    Param[24] = 1000;
-    Vitesse[24] = 60;
+    Actions[24] = 'B';
 
     Actions[25] = 'W';//stabilisation
     Param[25] = 700;
 
-    Actions[26] = 'T';//remise dans l'axe
-    Param[26] = -25;
+    Actions[26] = 'A';//Avance avec les balles
+    Param[26] = 1000;
+    Vitesse[26] = 60;
 
     Actions[27] = 'W';//stabilisation
     Param[27] = 700;
 
-    Actions[28] = 'T';//deuxieme virage
-    Param[28] = -250;
+    Actions[28] = 'T';//remise dans l'axe
+    Param[28] = -25;
 
     Actions[29] = 'W';//stabilisation
     Param[29] = 700;
 
-    Actions[30] = 'R';//Avance avec les balles
-    Param[30] = 2000;
-    Vitesse[30] = 60;
+    Actions[30] = 'T';//deuxieme virage
+    Param[30] = -250;
 
     Actions[31] = 'W';//stabilisation
     Param[31] = 700;
 
-    Actions[32] = 'E';// end of the line*/
+    Actions[32] = 'R';//Avance avec les balles
+    Param[32] = 3000;
+    Vitesse[32] = 60;
+
+    Actions[33] = 'W';//stabilisation
+    Param[33] = 700;
+
+    Actions[34] = 'E';// end of the line*/
     Serial.println("Yellow side !");
   }
 }
